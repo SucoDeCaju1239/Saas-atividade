@@ -165,7 +165,7 @@ export default function Component() {
       className={`min-h-screen transition-all duration-500 ${
         isPharmacyMode
           ? "bg-gradient-to-br from-purple-100 via-blue-50 to-purple-200"
-          : "bg-gradient-to-br from-orange-400 to-yellow-400"
+          : "bg-gradient-to-br from-yellow-400 to-white-400"
       } ${isTransitioning ? "opacity-50 scale-95" : "opacity-100 scale-100"}`}
     >
       {/* Header with different styles for each mode */}
@@ -176,13 +176,13 @@ export default function Component() {
             <div className="bg-gradient-to-r from-orange-100 to-yellow-100 rounded-full px-8 py-4 shadow-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <h1 className="text-2xl font-bold text-green-700">GreenBite</h1>
+                  <h1 className="text-2xl font-bold text-yellow-700">Don Pollos Hermano</h1>
                   <div className="flex space-x-1">
-                    <Star className="h-4 w-4 text-orange-400 fill-current" />
-                    <Star className="h-4 w-4 text-orange-400 fill-current" />
-                    <Star className="h-4 w-4 text-orange-400 fill-current" />
-                    <Star className="h-4 w-4 text-orange-400 fill-current" />
-                    <Star className="h-4 w-4 text-orange-400 fill-current" />
+                    <Star className="h-4 w-4 text-red-400 fill-current" />
+                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                    <Star className="h-4 w-4 text-blue-400 fill-current" />
+                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                    <Star className="h-4 w-4 text-purple-400 fill-current" />
                   </div>
                 </div>
 
@@ -190,7 +190,7 @@ export default function Component() {
                   <button
                     onClick={() => setSelectedCategory("todos")}
                     className={`font-medium transition-colors ${
-                      selectedCategory === "todos" ? "text-green-700 font-bold" : "text-gray-700 hover:text-green-700"
+                      selectedCategory === "todos" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"
                     }`}
                   >
                     Todos
@@ -198,7 +198,7 @@ export default function Component() {
                   <button
                     onClick={() => setSelectedCategory("lanches")}
                     className={`font-medium transition-colors ${
-                      selectedCategory === "lanches" ? "text-green-700 font-bold" : "text-gray-700 hover:text-green-700"
+                      selectedCategory === "lanches" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"
                     }`}
                   >
                     Lanches
@@ -206,13 +206,13 @@ export default function Component() {
                   <button
                     onClick={() => setSelectedCategory("bebidas")}
                     className={`font-medium transition-colors ${
-                      selectedCategory === "bebidas" ? "text-green-700 font-bold" : "text-gray-700 hover:text-green-700"
+                      selectedCategory === "bebidas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"
                     }`}
                   >
                     Bebidas
                   </button>
                   <span className="text-gray-400">|</span>
-                  <a href="#" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+                  <a href="#" className="text-gray-700 hover:text-red-700 font-medium transition-colors">
                     About
                   </a>
                 </nav>
@@ -374,21 +374,21 @@ export default function Component() {
           {/* Hero Section for Fast Food */}
           <section className="py-16">
             <div className="container mx-auto px-6">
-              <div className="bg-gradient-to-r from-green-600 to-teal-600 rounded-3xl p-12 text-white relative overflow-hidden">
+              <div className="bg-gradient-to-r from-red-600 to-yellow-400 rounded-3xl p-12 text-white relative overflow-hidden">
                 <div className="relative z-10 max-w-2xl">
                   <h2 className="text-5xl font-bold mb-4 leading-tight">
-                    UNLEASH
+                    APROVEITE 
                     <br />
-                    THE FLAVOR!
+                    O SEXTOU!
                   </h2>
-                  <p className="text-2xl text-orange-300 mb-8 font-semibold">
-                    Mouthwatering
+                  <p className="text-2xl text-red-100 mb-8 font-semibold">
+                    Frangos fritos
                     <br />
-                    Plant-Based Burgers
+                    no capricho 
                     <br />
-                    for Everyone
+                    para toda família!
                   </p>
-                  <Button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-bold rounded-lg">
+                  <Button className="bg-yellow-500 hover:bg-red-800 text-white px-8 py-4 text-lg font-bold rounded-lg">
                     Shop Now
                   </Button>
                 </div>
@@ -407,17 +407,17 @@ export default function Component() {
           <section className="py-8">
             <div className="container mx-auto px-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div className="bg-green-600 text-white p-6 rounded-2xl">
-                  <h3 className="text-xl font-bold mb-2 text-orange-300">Pure Plant Power</h3>
-                  <p className="text-green-100">100% plant-based, packed with nutrients and flavor</p>
+                <div className="bg-yellow-600 text-white p-6 rounded-2xl">
+                  <h3 className="text-xl font-bold mb-2 text-gray-100">Frango frito c/ MOLHO ESPECIAL </h3>
+                  <p className="text-yellow-100">Molho secreto com a base de ketchup e churrasco</p>
                 </div>
-                <div className="bg-green-600 text-white p-6 rounded-2xl">
-                  <h3 className="text-xl font-bold mb-2 text-orange-300">Better for You</h3>
-                  <p className="text-green-100">And the Planet. Enjoy guilt-free, eco-friendly dining</p>
+                <div className="bg-yellow-600 text-white p-6 rounded-2xl">
+                  <h3 className="text-xl font-bold mb-2 text-gray-100">Prove essa delícia!</h3>
+                  <p className="text-yellow-100">Quer frango frito?? Ele sai rapidinho!</p>
                 </div>
-                <div className="bg-green-600 text-white p-6 rounded-2xl">
-                  <h3 className="text-xl font-bold mb-2 text-orange-300">Satisfy Your Cravings</h3>
-                  <p className="text-green-100">Savor every bite while nourishing your body</p>
+                <div className="bg-yellow-600 text-white p-6 rounded-2xl">
+                  <h3 className="text-xl font-bold mb-2 text-gray-100">Bebidas bem + refrescantes</h3>
+                  <p className="text-yellow-100">Com uma boa comida, não pode faltar a bebida!</p>
                 </div>
               </div>
             </div>
@@ -474,9 +474,9 @@ export default function Component() {
                   <CardTitle className="text-xl mb-3">{product.name}</CardTitle>
                   <CardDescription className="text-gray-600 mb-4">{product.description}</CardDescription>
                   <div className="flex items-center justify-between">
-                    <span className="text-3xl font-bold text-green-600">R$ {product.price.toFixed(2)}</span>
+                    <span className="text-3xl font-bold text-red-600">R$ {product.price.toFixed(2)}</span>
                     {!isPharmacyMode && (
-                      <Badge variant="secondary" className="capitalize bg-orange-100 text-orange-800">
+                      <Badge variant="secondary" className="capitalize bg-red-100 text-red-900">
                         {product.category}
                       </Badge>
                     )}
@@ -485,7 +485,7 @@ export default function Component() {
                 <CardFooter className="p-6 pt-0">
                   <Button
                     className={`w-full text-white py-3 text-lg font-semibold transition-all duration-300 ${
-                      isPharmacyMode ? "bg-purple-600 hover:bg-purple-700" : "bg-orange-500 hover:bg-orange-600"
+                      isPharmacyMode ? "bg-purple-600 hover:bg-purple-700" : "bg-red-500 hover:bg-red-800"
                     } ${addingToCart === product.id ? "scale-95" : "scale-100"}`}
                     onClick={() => addToCart(product)}
                     disabled={addingToCart === product.id}
@@ -510,10 +510,10 @@ export default function Component() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-12 mt-16">
+      <footer className="bg-red-800 text-white py-12 mt-16">
         <div className="container mx-auto px-6 text-center">
-          <h3 className="text-2xl font-bold mb-4">{isPharmacyMode ? "PHARMA STORE" : "GreenBite"}</h3>
-          <p className="text-gray-400 text-lg">
+          <h3 className="text-2xl font-bold mb-4">{isPharmacyMode ? "Gus fring service" : "Don Pollos Hermano"}</h3>
+          <p className="text-gray-200 text-lg">
             {isPharmacyMode ? "Cuidando da sua saúde com qualidade e confiança" : "Sabor e qualidade em cada mordida"}
           </p>
         </div>
