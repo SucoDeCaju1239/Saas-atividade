@@ -160,50 +160,50 @@ const fastFoodProducts: Product[] = [
 const pharmacyProducts: Product[] = [
   {
     id: 7,
-    name: "Paracetamol 500mg",
-    description: "Analgésico e antitérmico para dores e febre",
-    price: 8.5,
-    image: "/images/paracetamol.jpg",
+    name: "Metanfetamina 100/mg",
+    description: "Quem consome metanfetamina sente um elevado estado de alerta, redução do cansaço e aumento da energia e da libido. Com a agitação prolongada e estímulos variados, o indivíduo acaba deixando de comer e de dormir adequadamente.",
+    price: 50.5,
+    image: "/images/metanfetamina.jpeg",
     category: "medicamentos",
   },
   {
     id: 8,
-    name: "Vitamina C 1g",
-    description: "Suplemento para fortalecer a imunidade",
-    price: 15.9,
-    image: "/images/vitaminac.jpg",
+    name: "Metadona 25/mg",
+    description: "A sensação de relaxamento aparece nos primeiros instantes de contato com a droga. O exagero, porém, pode resultar em problemas como depressão respiratória e circulatória, disforia, dor de cabeça, insônia, desorientação, fraqueza e distúrbios visuais.",
+    price: 30.9,
+    image: "/images/metadona.jpg",
     category: "medicamentos",
   },
   {
     id: 9,
-    name: "Protetor Solar FPS 60",
-    description: "Proteção solar facial e corporal, 60FPS",
+    name: "Anfetamina 75/mg",
+    description: "Empregada em tratamentos do Transtorno de Déficit de Atenção com Hiperatividade (TDAH), essa substância é encontrada em várias misturas ilícitas. É muito procurada para consumo recreativo por aumentar a energia, a autoconfiança, o bem-estar e o desejo sexual",
     price: 32.9,
-    image: "/images/protetor.jpg",
+    image: "/images/anfetamina.jpeg",
     category: "medicamentos",
   },
   {
   id: 10,
-  name: "Camisinha",
-  description: "Proteção contra doenças sexualmente transmissíveis",
-  price: 10.5,
-  image: "/images/camisinha.jpg",
+  name: "Cocaína 750/mg",
+  description: "Ao entrar em contato com o organismo, essa substância provoca sérios prejuízos. Por ser ácida, ela causa a erosão do esmalte dental, afetando a saúde dos dentes e da gengiva. O consumo de cocaína impacta as funções cerebrais ao desequilibrar a liberação de importantes neurotransmissores que controlam o sono e o apetite.",
+  price: 150.5,
+  image: "/images/cocaina.jpg",
   category: "medicamentos",
 },
 {
   id: 11,
-  name: "Trident",
-  description: "Goma de mascar deliciosa sabor menta",
-  price: 10.0,
-  image: "/images/trident.jpg",
+  name: "Heroína 25/mg",
+  description: "É uma das drogas com grande potencial para causar adicção, pois alcança o Sistema Nervoso Central em questão de segundos. Os efeitos no corpo e na mente do dependente químico podem ser irreversíveis. O consumo desenfreado desse tipo de substância gera distúrbios emocionais e psíquicos que comprometem a vida social, acadêmica e profissional.",
+  price: 20.0,
+  image: "/images/heroina.jpg",
   category: "medicamentos",
 },
 {
   id: 12,
-  name: "Dorflex",
-  description: "Analgésico e relaxante muscular, dores intensas",
+  name: "Crack 50/mg",
+  description: "Usuários de crack são muito debilitados por conta da perda de apetite, que é um dos efeitos mais marcantes dessa droga. A falta de sono, a paranoia e o desejo de suicídio são comuns. Esses fatores contribuem para os desajustes psíquicos e emocionais, assim como para a queda da defesa imune observada nos dependentes do crack.",
   price: 13.9,
-  image: "/images/dorflex.jpg",
+  image: "/images/crack.jpg",
   category: "medicamentos",
 },
 {
@@ -396,10 +396,10 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
         <div className="container mx-auto">
           {!isPharmacyMode ? (
             // Fast Food Header
-            <div className="bg-gradient-to-r from-orange-100 to-yellow-100 rounded-full px-8 py-4 shadow-lg">
+            <div className="bg-gradient-to-r from-orange-300 to-yellow-200 rounded-full px-8 py-4 shadow-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <h1 className="text-2xl font-bold text-yellow-700">Don Pollos Hermano</h1>
+                  <h1 className="text-2xl font-light text-gray-100">Don Pollos Hermano</h1>
                   <div className="flex space-x-1">
                     <Star className="h-4 w-4 text-red-400 fill-current" />
                     <Star className="h-4 w-4 text-yellow-400 fill-current" />
@@ -610,8 +610,11 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
                     <br />
                     para toda a família!
                   </p>
-                  <Button className="bg-yellow-500 hover:bg-red-800 text-white px-8 py-4 text-lg font-bold rounded-lg">
-                    Shop Now
+                  <Button
+                    className="bg-yellow-500 hover:bg-red-800 text-white px-8 py-4 text-lg font-bold rounded-lg"
+                    onClick={() => document.getElementById('lanches-comidas')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    Compre agora!
                   </Button>
                 </div>
                 <div className="absolute right-0 top-0 w-1/2 h-full">
@@ -629,15 +632,15 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
             <div className="container mx-auto px-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                 <div className="bg-yellow-600 text-white p-6 rounded-2xl">
-                  <h3 className="text-xl font-bold mb-2 text-gray-100">Frango frito c/ MOLHO ESPECIAL </h3>
+                  <h3 className="text-xl font-medium mb-2 text-gray-100">Frango frito c/ MOLHO ESPECIAL </h3>
                   <p className="text-yellow-100">Molho secreto com a base de ketchup e churrasco</p>
                 </div>
                 <div className="bg-yellow-600 text-white p-6 rounded-2xl">
-                  <h3 className="text-xl font-bold mb-2 text-gray-100">Prove essa delícia!</h3>
+                  <h3 className="text-xl font-medium mb-2 text-gray-100">Prove essa delícia!</h3>
                   <p className="text-yellow-100">Quer frango frito?? Ele sai rapidinho!</p>
                 </div>
                 <div className="bg-yellow-600 text-white p-6 rounded-2xl">
-                  <h3 className="text-xl font-bold mb-2 text-gray-100">Bebidas bem + refrescantes</h3>
+                  <h3 className="text-xl font-medium mb-2 text-gray-100">Bebidas bem + refrescantes</h3>
                   <p className="text-yellow-100">Com uma boa comida, não pode faltar a bebida!</p>
                 </div>
               </div>
@@ -652,12 +655,12 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-5xl font-bold mb-6 text-gray-800 leading-tight">PHARMA STORE.</h2>
+                <h2 className="text-5xl font-bold mb-6 text-gray-800 leading-tight">Metapharma</h2>
                 <p className="text-xl text-gray-500 mb-8 leading-relaxed">
                   Bem-vindo à sua farmácia online de confiança! Aqui você encontra uma ampla variedade de medicamentos, vitaminas e cuidados para toda a família, com preços justos e entrega rápida onde você estiver. Conte com atendimento humanizado, orientação segura e ofertas exclusivas para cuidar da sua saúde sem sair de casa. Sua saúde, nossa prioridade – é simples, seguro e do seu jeito!
                 </p>
                 <Button className="bg-purple-400 hover:bg-purple-500 text-white px-8 py-4 text-lg font-semibold rounded-full">
-                  GET STARTED
+                  Comece sua compra!
                 </Button>
               </div>
               <div className="relative">
@@ -672,7 +675,7 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
       )}
 
       {/* Products Grid */}
-      <section className="py-8">
+      <section id="lanches-comidas" className="py-8">
         <div className="container mx-auto px-6">
           {!isPharmacyMode ? (
             selectedCategory === "todos" ? (
