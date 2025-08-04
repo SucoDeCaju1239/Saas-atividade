@@ -242,7 +242,12 @@ export default function Component() {
   const currentProducts = isPharmacyMode ? pharmacyProducts : fastFoodProducts
   const categories = isPharmacyMode ? ["todos"] : ["todos", "lanches", "bebidas", "sobremesas"]
 
-const filteredProducts = currentProducts
+  // Atualize o filtro de produtos para Fast Food
+  const filteredProducts = isPharmacyMode
+    ? pharmacyProducts
+    : selectedCategory === "todos"
+      ? fastFoodProducts
+      : fastFoodProducts.filter((p) => p.category === selectedCategory)
 
 // Group fastFoodProducts by category for carousels
 const categorizedProducts = {
@@ -335,7 +340,7 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
       </div>
       <div
         ref={containerRef}
-        className="flex space-x-6 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory"
+        className="flex space-x-6 overflow-x-auto pb-4 scroll-smooth snap-x snap-mandatory carousel-scroll"
       >
         {products.map((product) => (
           <div
@@ -345,7 +350,20 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
             <img src={product.image || "/placeholder.svg"} alt={product.name} className="h-48 w-full object-cover" />
             <div className="p-4 flex flex-col justify-between h-[200px]">
               <div>
-                <h3 className="font-bold text-lg text-red-700">{product.name}</h3>
+                <h3
+  className="font-extrabold text-lg md:text-xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-red-500 to-yellow-600 drop-shadow-sm flex items-center gap-2 mb-1"
+>
+  <span role="img" aria-label="categoria">
+    {product.category === "lanches"
+      ? "🍔"
+      : product.category === "bebidas"
+      ? "🥤"
+      : product.category === "sobremesas"
+      ? "🍨"
+      : "🛒"}
+  </span>
+  {product.name}
+</h3>
                 <p className="text-gray-600 text-sm mt-1 mb-2">{product.description}</p>
               </div>
               <div className="flex justify-between items-center mt-auto">
@@ -409,6 +427,12 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
                     className={`font-medium transition-colors ${selectedCategory === "bebidas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
                   >
                     Bebidas
+                  </button>
+                  <button
+                    onClick={() => setSelectedCategory("sobremesas")}
+                    className={`font-medium transition-colors ${selectedCategory === "sobremesas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+                  >
+                    Sobremesas
                   </button>
                   <span className="text-gray-400">|</span>
                   <a href="#" className="text-gray-700 hover:text-red-700 font-medium transition-colors">
@@ -584,7 +608,7 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
                     <br />
                     no capricho
                     <br />
-                    para toda família!
+                    para toda a família!
                   </p>
                   <Button className="bg-yellow-500 hover:bg-red-800 text-white px-8 py-4 text-lg font-bold rounded-lg">
                     Shop Now
@@ -649,42 +673,55 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
 
       {/* Products Grid */}
       <section className="py-8">
-  <div className="container mx-auto px-6">
-    {!isPharmacyMode ? (
-      <>
-        <Carousel title="🍔 Lanches" products={categorizedProducts.lanches} />
-        <Carousel title="🥤 Bebidas" products={categorizedProducts.bebidas} />
-        <Carousel title="🍨 Sobremesas" products={categorizedProducts.sobremesas} />
-      </>
-    ) : (
-      // Farmácia - grid tradicional
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
-        {filteredProducts.map((product) => (
-          <Card key={product.id} className="overflow-hidden hover:shadow-xl transition duration-300">
-            <CardHeader className="p-0">
-              <img src={product.image || "/placeholder.svg"} alt={product.name} className="w-full h-64 object-cover" />
-            </CardHeader>
-            <CardContent className="p-6">
-              <CardTitle className="text-xl mb-3">{product.name}</CardTitle>
-              <CardDescription className="text-gray-600 mb-4">{product.description}</CardDescription>
-              <div className="flex items-center justify-between">
-                <span className="text-3xl font-bold text-purple-600">R$ {product.price.toFixed(2)}</span>
-              </div>
-            </CardContent>
-            <CardFooter className="p-6 pt-0">
-              <Button
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white"
-                onClick={() => addToCart(product)}
-              >
-                <Plus className="h-5 w-5 mr-2" /> Comprar
-              </Button>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
-    )}
-  </div>
-</section>
+        <div className="container mx-auto px-6">
+          {!isPharmacyMode ? (
+            selectedCategory === "todos" ? (
+              <>
+                <Carousel title="🍔 Lanches" products={categorizedProducts.lanches} />
+                <Carousel title="🥤 Bebidas" products={categorizedProducts.bebidas} />
+                <Carousel title="🍨 Sobremesas" products={categorizedProducts.sobremesas} />
+              </>
+            ) : (
+              <Carousel
+                title={
+                  selectedCategory === "lanches"
+                    ? "🍔 Lanches"
+                    : selectedCategory === "bebidas"
+                    ? "🥤 Bebidas"
+                    : "🍨 Sobremesas"
+                }
+                products={filteredProducts}
+              />
+            )
+          ) : (
+            // Farmácia - grid tradicional
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              {filteredProducts.map((product) => (
+                <Card key={product.id} className="overflow-hidden hover:shadow-xl transition duration-300">
+                  <CardHeader className="p-0">
+                    <img src={product.image || "/placeholder.svg"} alt={product.name} className="w-full h-64 object-cover" />
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <CardTitle className="text-xl mb-3">{product.name}</CardTitle>
+                    <CardDescription className="text-gray-600 mb-4">{product.description}</CardDescription>
+                    <div className="flex items-center justify-between">
+                      <span className="text-3xl font-bold text-purple-600">R$ {product.price.toFixed(2)}</span>
+                    </div>
+                  </CardContent>
+                  <CardFooter className="p-6 pt-0">
+                    <Button
+                      className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                      onClick={() => addToCart(product)}
+                    >
+                      <Plus className="h-5 w-5 mr-2" /> Comprar
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
 
       {/* Footer */}
