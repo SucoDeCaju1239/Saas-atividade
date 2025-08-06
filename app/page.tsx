@@ -208,26 +208,26 @@ const pharmacyProducts: Product[] = [
 },
 {
   id: 13,
-  name: "Dipirona Sódica 500mg",
-  description: "Analgésico e antitérmico para dores e febre",
+  name: "Ectasy",
+  description: "O ecstasy, conhecido popularmente como droga do amor, trata-se de uma substância psicoativa, classificada quimicamente como 3,4-metilenodioximetanfetamina ou MDMA. A bala ecstasy ficou bastante popular como droga do amor por aumentar a percepção de cores e sons.",
   price: 9.9,
-  image: "/images/dipirona.jpg",
+  image: "/images/Ectasy.jpg",
   category: "medicamentos",
 },
 {
   id: 14,
-  name: "Absorvente",
-  description: "Proteção feminina descartável com abas suave",
-  price: 14.9,
-  image: "/images/absorvente.jpg",
+  name: "Quetamina 10/ml",
+  description: "Seus efeitos dependem da dosagem, mas, em geral, a quetamina possui uma ação dissociativa, que pode causar no paciente, além da anestesia, efeitos colaterais como sensação de estar desconectado do próprio corpo, alucinações, sentir como se estivesse sonhando, entre outros. ",
+  price: 30.4,
+  image: "/images/quetamina.jpg",
   category: "medicamentos",
 },
 {
   id: 15,
-  name: "Lubrificante",
-  description: "Lubrificante íntimo KMED à base de água",
-  price: 4.5,
-  image: "/images/lubrificante.jpg",
+  name: "Popper 10/ml",
+  description: "Poppers são conteúdos inalados, geralmente em pequenos vidros que contêm substâncias químicas da classe dos nitratos de alquila, sendo os mais comuns nitrito de isoamila, isopentila, isobutila ou isopropila. São conhecidas como “drogas do amor”, por conta de seu efeito de relaxamento muscular, intensificando o prazer sexual.",
+  price: 27.5,
+  image: "/images/popper.jpg",
   category: "medicamentos",
 }
 ]
@@ -247,7 +247,9 @@ export default function Component() {
     ? pharmacyProducts
     : selectedCategory === "todos"
       ? fastFoodProducts
-      : fastFoodProducts.filter((p) => p.category === selectedCategory)
+      : fastFoodProducts.filter(
+        p => p.category === selectedCategory
+      );
 
 // Group fastFoodProducts by category for carousels
 const categorizedProducts = {
@@ -296,12 +298,12 @@ const categorizedProducts = {
     setTimeout(() => {
       setIsPharmacyMode(!isPharmacyMode)
       setCart([])
-      setSelectedCategory("todos")
+      setSelectedCategory(!isPharmacyMode ? "medicamentos" : "todos") // Já seleciona "medicamentos" ao ir para farmácia
       setIsTransitioning(false)
     }, 500)
   }
 
-function Carousel({ title, products }: { title: string; products: Product[] }) {
+function Carousel({ title, products }: { title: React.ReactNode; products: Product[] }) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   // Auto-scroll
@@ -328,7 +330,7 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
   return (
     <div className="mb-12">
       <div className="flex justify-between items-center mb-4 px-1">
-        <h2 className="text-2xl font-bold text-red-700">{title}</h2>
+        {title}
         <div className="space-x-2 hidden sm:flex">
           <button onClick={scrollLeft} className="px-2 py-1 bg-white rounded-full shadow hover:bg-gray-100">
             ◀
@@ -389,207 +391,204 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
     <div
       className={`min-h-screen transition-all duration-500 ${isPharmacyMode
           ? "bg-gradient-to-br from-purple-100 via-blue-50 to-purple-200"
-          : "bg-gradient-to-br from-yellow-400 to-white-400"} ${isTransitioning ? "opacity-50 scale-95" : "opacity-100 scale-100"}`}
+          : "bg-gradient-to-br from-black via-gray-900 to-black"} ${isTransitioning ? "opacity-50 scale-95" : "opacity-100 scale-100"}`}
     >
       {/* Header with different styles for each mode */}
       <header className={`${isPharmacyMode ? "p-6" : "p-6"}`}>
-        <div className="container mx-auto">
-          {!isPharmacyMode ? (
-            // Fast Food Header
-            <div className="bg-gradient-to-r from-orange-300 to-yellow-200 rounded-full px-8 py-4 shadow-lg">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <h1 className="text-2xl font-light text-gray-100">Don Pollos Hermano</h1>
-                  <div className="flex space-x-1">
-                    <Star className="h-4 w-4 text-red-400 fill-current" />
-                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                    <Star className="h-4 w-4 text-blue-400 fill-current" />
-                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                    <Star className="h-4 w-4 text-purple-400 fill-current" />
-                  </div>
-                </div>
-
-                <nav className="hidden lg:flex items-center space-x-8">
-                  <button
-                    onClick={() => setSelectedCategory("todos")}
-                    className={`font-medium transition-colors ${selectedCategory === "todos" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-                  >
-                    Todos
-                  </button>
-                  <button
-                    onClick={() => setSelectedCategory("lanches")}
-                    className={`font-medium transition-colors ${selectedCategory === "lanches" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-                  >
-                    Lanches
-                  </button>
-                  <button
-                    onClick={() => setSelectedCategory("bebidas")}
-                    className={`font-medium transition-colors ${selectedCategory === "bebidas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-                  >
-                    Bebidas
-                  </button>
-                  <button
-                    onClick={() => setSelectedCategory("sobremesas")}
-                    className={`font-medium transition-colors ${selectedCategory === "sobremesas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-                  >
-                    Sobremesas
-                  </button>
-                  <span className="text-gray-400">|</span>
-                  <a href="#" className="text-gray-700 hover:text-red-700 font-medium transition-colors">
-                    About
-                  </a>
-                </nav>
-
-                <div className="flex items-center space-x-4">
-                  <div className="relative">
-                    <Input
-                      type="search"
-                      placeholder=""
-                      className="pl-4 pr-12 py-2 w-48 rounded-full bg-orange-200/50 border-0 focus:bg-orange-200/70 focus:ring-orange-300 placeholder:text-transparent" />
-                    <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-600" />
-                  </div>
-
-                  <Sheet>
-                    <SheetTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="relative bg-orange-500 hover:bg-orange-600 text-white border-0 rounded-full px-6 py-2"
-                      >
-                        <ShoppingCart className="h-5 w-5 mr-2" />
-                        Cart
-                        {getTotalItems() > 0 && (
-                          <Badge className="absolute -top-2 -right-2 bg-red-500 text-white animate-bounce">
-                            {getTotalItems()}
-                          </Badge>
-                        )}
-                      </Button>
-                    </SheetTrigger>
-                    <SheetContent>
-                      <SheetHeader>
-                        <SheetTitle>Seu Carrinho</SheetTitle>
-                        <SheetDescription>
-                          {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
-                        </SheetDescription>
-                      </SheetHeader>
-                      <div className="mt-6 space-y-4">
-                        {cart.map((item) => (
-                          <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
-                            <div className="flex-1">
-                              <h4 className="font-medium">{item.name}</h4>
-                              <p className="text-sm text-muted-foreground">R$ {item.price.toFixed(2)} cada</p>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
-                                <Minus className="h-4 w-4" />
-                              </Button>
-                              <span className="w-8 text-center">{item.quantity}</span>
-                              <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
-                                <Plus className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
-                        ))}
-                        {cart.length > 0 && (
-                          <>
-                            <Separator />
-                            <div className="flex justify-between items-center font-bold text-lg">
-                              <span>Total:</span>
-                              <span>R$ {getTotalPrice().toFixed(2)}</span>
-                            </div>
-                            <Button className="w-full bg-orange-500 hover:bg-orange-600" size="lg">
-                              Finalizar Pedido
-                            </Button>
-                          </>
-                        )}
-                      </div>
-                    </SheetContent>
-                  </Sheet>
-                </div>
-              </div>
+  <div className="container mx-auto">
+    {!isPharmacyMode ? (
+      // Fast Food Header
+      <div className="bg-gradient-to-r from-orange-300 to-yellow-200 rounded-full px-8 py-4 shadow-lg">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <img src="/images/Logo site.jpg" alt="Don Pollos Hermano" className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-gray-800" />
+            <div className="flex space-x-1">
+              <Star className="h-4 w-4 text-red-400 fill-current" />
+              <Star className="h-4 w-4 text-yellow-400 fill-current" />
+              <Star className="h-4 w-4 text-blue-400 fill-current" />
+              <Star className="h-4 w-4 text-yellow-400 fill-current" />
+              <Star className="h-4 w-4 text-purple-400 fill-current" />
             </div>
-          ) : (
-            // Pharmacy Header - Clean and minimal like the image
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 flex items-center justify-center">
-                      <img src="/images/logo.jpg" alt="Logo" className="w-full h-full object-contain" />
-                  </div>
-                </div>
+          </div>
 
-                <nav className="hidden lg:flex items-center space-x-12">
-                  <a href="#" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
-                    Home
-                  </a>
-                  <a href="#" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
-                    About us
-                  </a>
-                  <a href="#" className="text-gray-700 hover:text-gray-900 font-medium transition-colors">
-                    Service
-                  </a>
-                </nav>
+          <nav className="hidden lg:flex items-center space-x-8">
+            <button
+              onClick={() => setSelectedCategory("todos")}
+              className={`font-medium transition-colors ${selectedCategory === "todos" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+            >
+              Todos
+            </button>
+            <button
+              onClick={() => setSelectedCategory("lanches")}
+              className={`font-medium transition-colors ${selectedCategory === "lanches" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+            >
+              Lanches
+            </button>
+            <button
+              onClick={() => setSelectedCategory("bebidas")}
+              className={`font-medium transition-colors ${selectedCategory === "bebidas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+            >
+              Bebidas
+            </button>
+            <button
+              onClick={() => setSelectedCategory("sobremesas")}
+              className={`font-medium transition-colors ${selectedCategory === "sobremesas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+            >
+              Sobremesas
+            </button>
+            <span className="text-gray-400">|</span>
+            <a href="#" className="text-gray-700 hover:text-red-700 font-medium transition-colors">
+              About
+            </a>
+          </nav>
 
-                <div className="flex items-center space-x-4">
-                  <Sheet>
-                    <SheetTrigger asChild>
-                      <Button variant="ghost" size="sm" className="relative">
-                        <ShoppingCart className="h-5 w-5" />
-                        {getTotalItems() > 0 && (
-                          <Badge className="absolute -top-2 -right-2 bg-purple-500 text-white animate-bounce">
-                            {getTotalItems()}
-                          </Badge>
-                        )}
-                      </Button>
-                    </SheetTrigger>
-                    <SheetContent>
-                      <SheetHeader>
-                        <SheetTitle>Seu Carrinho</SheetTitle>
-                        <SheetDescription>
-                          {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
-                        </SheetDescription>
-                      </SheetHeader>
-                      <div className="mt-6 space-y-4">
-                        {cart.map((item) => (
-                          <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
-                            <div className="flex-1">
-                              <h4 className="font-medium">{item.name}</h4>
-                              <p className="text-sm text-muted-foreground">R$ {item.price.toFixed(2)} cada</p>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
-                                <Minus className="h-4 w-4" />
-                              </Button>
-                              <span className="w-8 text-center">{item.quantity}</span>
-                              <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
-                                <Plus className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
-                        ))}
-                        {cart.length > 0 && (
-                          <>
-                            <Separator />
-                            <div className="flex justify-between items-center font-bold text-lg">
-                              <span>Total:</span>
-                              <span>R$ {getTotalPrice().toFixed(2)}</span>
-                            </div>
-                            <Button className="w-full bg-purple-600 hover:bg-purple-700" size="lg">
-                              Finalizar Pedido
-                            </Button>
-                          </>
-                        )}
+          <div className="flex items-center space-x-4">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="relative bg-orange-500 hover:bg-orange-600 text-white border-0 rounded-full px-6 py-2"
+                >
+                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  Cart
+                  {getTotalItems() > 0 && (
+                    <Badge className="absolute -top-2 -right-2 bg-red-500 text-white animate-bounce">
+                      {getTotalItems()}
+                    </Badge>
+                  )}
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Seu Carrinho</SheetTitle>
+                  <SheetDescription>
+                    {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-6 space-y-4">
+                  {cart.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex-1">
+                        <h4 className="font-medium">{item.name}</h4>
+                        <p className="text-sm text-muted-foreground">R$ {item.price.toFixed(2)} cada</p>
                       </div>
-                    </SheetContent>
-                  </Sheet>
-                  <Button variant="ghost" size="sm">
-                    <Menu className="h-5 w-5" />
-                  </Button>
+                      <div className="flex items-center space-x-2">
+                        <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
+                          <Minus className="h-4 w-4" />
+                        </Button>
+                        <span className="w-8 text-center">{item.quantity}</span>
+                        <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                  {cart.length > 0 && (
+                    <>
+                      <Separator />
+                      <div className="flex justify-between items-center font-bold text-lg">
+                        <span>Total:</span>
+                        <span>R$ {getTotalPrice().toFixed(2)}</span>
+                      </div>
+                      <Button className="w-full bg-orange-500 hover:bg-orange-600" size="lg">
+                        Finalizar Pedido
+                      </Button>
+                    </>
+                  )}
                 </div>
-              </div>
-            </div>
-          )}
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
-      </header>
+      </div>
+    ) : (
+      // Pharmacy Header - agora igual ao fast food
+      <div className="bg-gradient-to-r from-purple-200 to-blue-100 rounded-full px-8 py-4 shadow-lg">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <img src="/images/logo.jpg" alt="Logo" className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-gray-400" />
+            <div className="flex space-x-1">
+              <Star className="h-4 w-4 text-purple-400 fill-current" />
+              <Star className="h-4 w-4 text-blue-400 fill-current" />
+              <Star className="h-4 w-4 text-yellow-400 fill-current" />
+              <Star className="h-4 w-4 text-blue-400 fill-current" />
+              <Star className="h-4 w-4 text-purple-400 fill-current" />
+            </div>
+          </div>
+          <nav className="hidden lg:flex items-center space-x-8">
+  <button
+    onClick={() => setSelectedCategory("medicamentos")}
+    className={`font-medium transition-colors ${selectedCategory === "medicamentos" ? "text-purple-700 font-bold" : "text-gray-700 hover:text-purple-700"}`}
+  >
+    Medicamentos
+  </button>
+  <span className="text-gray-400">|</span>
+  <a href="#" className="text-gray-700 hover:text-purple-700 font-medium transition-colors">
+    Sobre
+  </a>
+</nav>
+          <div className="flex items-center space-x-4">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="relative bg-purple-500 hover:bg-purple-600 text-white border-0 rounded-full px-6 py-2"
+                >
+                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  Cart
+                  {getTotalItems() > 0 && (
+                    <Badge className="absolute -top-2 -right-2 bg-purple-500 text-white animate-bounce">
+                      {getTotalItems()}
+                    </Badge>
+                  )}
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Seu Carrinho</SheetTitle>
+                  <SheetDescription>
+                    {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-6 space-y-4">
+                  {cart.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex-1">
+                        <h4 className="font-medium">{item.name}</h4>
+                        <p className="text-sm text-muted-foreground">R$ {item.price.toFixed(2)} cada</p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
+                          <Minus className="h-4 w-4" />
+                        </Button>
+                        <span className="w-8 text-center">{item.quantity}</span>
+                        <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                  {cart.length > 0 && (
+                    <>
+                      <Separator />
+                      <div className="flex justify-between items-center font-bold text-lg">
+                        <span>Total:</span>
+                        <span>R$ {getTotalPrice().toFixed(2)}</span>
+                      </div>
+                      <Button className="w-full bg-purple-600 hover:bg-purple-700" size="lg">
+                        Finalizar Pedido
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+</header>
 
       {!isPharmacyMode && (
         <>
@@ -611,7 +610,7 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
                     para toda a família!
                   </p>
                   <Button
-                    className="bg-yellow-500 hover:bg-red-800 text-white px-8 py-4 text-lg font-bold rounded-lg"
+                    className="bg-yellow-500 hover:bg-red-800 text-white px-8 py-4 text-lg font-sans rounded-lg"
                     onClick={() => document.getElementById('lanches-comidas')?.scrollIntoView({ behavior: 'smooth' })}
                   >
                     Compre agora!
@@ -632,16 +631,16 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
             <div className="container mx-auto px-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                 <div className="bg-yellow-600 text-white p-6 rounded-2xl">
-                  <h3 className="text-xl font-medium mb-2 text-gray-100">Frango frito c/ MOLHO ESPECIAL </h3>
-                  <p className="text-yellow-100">Molho secreto com a base de ketchup e churrasco</p>
+                  <h3 className="text-xl font-sans mb-2 text-gray-100">Frango frito c/ MOLHO ESPECIAL </h3>
+                  <p className="text-yellow-100 font-sans">Molho secreto com a base de ketchup e churrasco</p>
                 </div>
                 <div className="bg-yellow-600 text-white p-6 rounded-2xl">
-                  <h3 className="text-xl font-medium mb-2 text-gray-100">Prove essa delícia!</h3>
-                  <p className="text-yellow-100">Quer frango frito?? Ele sai rapidinho!</p>
+                  <h3 className="text-xl font-sans mb-2 text-gray-100">Prove essa delícia!</h3>
+                  <p className="text-yellow-100 font-sans">Quer frango frito?? Ele sai rapidinho!</p>
                 </div>
                 <div className="bg-yellow-600 text-white p-6 rounded-2xl">
-                  <h3 className="text-xl font-medium mb-2 text-gray-100">Bebidas bem + refrescantes</h3>
-                  <p className="text-yellow-100">Com uma boa comida, não pode faltar a bebida!</p>
+                  <h3 className="text-xl font-sans mb-2 text-gray-100">Bebidas bem + refrescantes</h3>
+                  <p className="text-yellow-100 font-sans">Com uma boa comida, não pode faltar a bebida!</p>
                 </div>
               </div>
             </div>
@@ -659,7 +658,10 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
                 <p className="text-xl text-gray-500 mb-8 leading-relaxed">
                   Bem-vindo à sua farmácia online de confiança! Aqui você encontra uma ampla variedade de medicamentos, vitaminas e cuidados para toda a família, com preços justos e entrega rápida onde você estiver. Conte com atendimento humanizado, orientação segura e ofertas exclusivas para cuidar da sua saúde sem sair de casa. Sua saúde, nossa prioridade – é simples, seguro e do seu jeito!
                 </p>
-                <Button className="bg-purple-400 hover:bg-purple-500 text-white px-8 py-4 text-lg font-semibold rounded-full">
+                <Button
+                  className="bg-purple-400 hover:bg-purple-500 text-white px-8 py-4 text-lg font-semibold rounded-full"
+                  onClick={() => document.getElementById('lanches-comidas')?.scrollIntoView({ behavior: 'smooth' })}
+                >
                   Comece sua compra!
                 </Button>
               </div>
@@ -676,55 +678,76 @@ function Carousel({ title, products }: { title: string; products: Product[] }) {
 
       {/* Products Grid */}
       <section id="lanches-comidas" className="py-8">
-        <div className="container mx-auto px-6">
-          {!isPharmacyMode ? (
-            selectedCategory === "todos" ? (
-              <>
-                <Carousel title="🍔 Lanches" products={categorizedProducts.lanches} />
-                <Carousel title="🥤 Bebidas" products={categorizedProducts.bebidas} />
-                <Carousel title="🍨 Sobremesas" products={categorizedProducts.sobremesas} />
-              </>
-            ) : (
-              <Carousel
-                title={
-                  selectedCategory === "lanches"
-                    ? "🍔 Lanches"
-                    : selectedCategory === "bebidas"
-                    ? "🥤 Bebidas"
-                    : "🍨 Sobremesas"
-                }
-                products={filteredProducts}
-              />
-            )
-          ) : (
-            // Farmácia - grid tradicional
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              {filteredProducts.map((product) => (
-                <Card key={product.id} className="overflow-hidden hover:shadow-xl transition duration-300">
-                  <CardHeader className="p-0">
-                    <img src={product.image || "/placeholder.svg"} alt={product.name} className="w-full h-64 object-cover" />
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <CardTitle className="text-xl mb-3">{product.name}</CardTitle>
-                    <CardDescription className="text-gray-600 mb-4">{product.description}</CardDescription>
-                    <div className="flex items-center justify-between">
-                      <span className="text-3xl font-bold text-purple-600">R$ {product.price.toFixed(2)}</span>
-                    </div>
-                  </CardContent>
-                  <CardFooter className="p-6 pt-0">
-                    <Button
-                      className="w-full bg-purple-600 hover:bg-purple-700 text-white"
-                      onClick={() => addToCart(product)}
-                    >
-                      <Plus className="h-5 w-5 mr-2" /> Comprar
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+  <div className="container mx-auto px-6 ">
+    {!isPharmacyMode ? (
+      selectedCategory === "todos" ? (
+        <>
+          <Carousel
+            title={
+              <h1 className="text-4xl font-bold text-white">
+                Lanches
+              </h1>
+            }
+            products={categorizedProducts.lanches}
+          />
+          <Carousel
+            title={
+              <h1 className="text-4xl font-bold text-white">
+                Bebidas
+              </h1>
+            }
+            products={categorizedProducts.bebidas}
+          />
+          <Carousel
+            title={
+              <h1 className="text-4xl font-bold text-white">
+                Sobremesas
+              </h1>
+            }
+            products={categorizedProducts.sobremesas}
+          />
+        </>
+      ) : (
+        <Carousel
+          title={
+            selectedCategory === "lanches"
+              ? "🍔 Lanches"
+              : selectedCategory === "bebidas"
+              ? "🥤 Bebidas"
+              : "🍨 Sobremesas"
+          }
+          products={filteredProducts}
+        />
+      )
+    ) : (
+      // Farmácia - grid tradicional
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        {filteredProducts.map((product) => (
+          <Card key={product.id} className="overflow-hidden hover:shadow-xl transition duration-300">
+            <CardHeader className="p-0">
+              <img src={product.image || "/placeholder.svg"} alt={product.name} className="w-full h-64 object-cover" />
+            </CardHeader>
+            <CardContent className="p-6">
+              <CardTitle className="text-xl mb-3">{product.name}</CardTitle>
+              <CardDescription className="text-gray-600 mb-4">{product.description}</CardDescription>
+              <div className="flex items-center justify-between">
+                <span className="text-3xl font-bold text-purple-600">R$ {product.price.toFixed(2)}</span>
+              </div>
+            </CardContent>
+            <CardFooter className="p-6 pt-0">
+              <Button
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                onClick={() => addToCart(product)}
+              >
+                <Plus className="h-5 w-5 mr-2" /> Comprar
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
 
 
       {/* Footer */}

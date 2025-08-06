@@ -91,7 +91,7 @@
 
 /* Scrollbar customizada para carrossel de produtos */
 .carousel-scroll::-webkit-scrollbar {
-  height: 10px;
+  height: 18px; /* antes: 10px */
   background: transparent;
 }
 .carousel-scroll::-webkit-scrollbar-thumb {
@@ -103,6 +103,6 @@
 }
 .carousel-scroll {
   scrollbar-color: #fbbf24 #fff0;
-  scrollbar-width: thin;
+  scrollbar-width: thick; /* antes: thin */
 }
 
