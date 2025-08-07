@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
 import { link } from "fs"
 import React from 'react';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+
 
 interface Product {
   id: number
@@ -330,7 +330,7 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
   return (
     <div className="mb-12">
       <div className="flex justify-between items-center mb-4 px-1">
-        {title}
+        <div className="text-4xl md:text-5xl font-bold text-white">{title}</div>
         <div className="space-x-2 hidden sm:flex">
           <button onClick={scrollLeft} className="px-2 py-1 bg-white rounded-full shadow hover:bg-gray-100">
             ◀
@@ -401,13 +401,13 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
       <div className="bg-gradient-to-r from-orange-300 to-yellow-200 rounded-full px-8 py-4 shadow-lg">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <img src="/images/Logo site.jpg" alt="Don Pollos Hermano" className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-gray-800" />
+            <img src="/images/Logo site.jpg" alt="Don Pollos Hermano" className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-blue-600" />
             <div className="flex space-x-1">
-              <Star className="h-4 w-4 text-red-400 fill-current" />
-              <Star className="h-4 w-4 text-yellow-400 fill-current" />
-              <Star className="h-4 w-4 text-blue-400 fill-current" />
-              <Star className="h-4 w-4 text-yellow-400 fill-current" />
-              <Star className="h-4 w-4 text-purple-400 fill-current" />
+              <Star className="h-4 w-4 text-red-400 fill-current drop-shadow" />
+              <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
+              <Star className="h-4 w-4 text-blue-400 fill-current drop-shadow" />
+              <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
+              <Star className="h-4 w-4 text-purple-400 fill-current drop-shadow" />
             </div>
           </div>
 
@@ -450,7 +450,7 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
                   className="relative bg-orange-500 hover:bg-orange-600 text-white border-0 rounded-full px-6 py-2"
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />
-                  Cart
+                  Carrinho
                   {getTotalItems() > 0 && (
                     <Badge className="absolute -top-2 -right-2 bg-red-500 text-white animate-bounce">
                       {getTotalItems()}
@@ -506,7 +506,7 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
       <div className="bg-gradient-to-r from-purple-200 to-blue-100 rounded-full px-8 py-4 shadow-lg">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <img src="/images/logo.jpg" alt="Logo" className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-gray-400" />
+            <img src="/images/gus.jpg" alt="Logo" className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-gray-400" />
             <div className="flex space-x-1">
               <Star className="h-4 w-4 text-purple-400 fill-current" />
               <Star className="h-4 w-4 text-blue-400 fill-current" />
@@ -535,7 +535,7 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
                   className="relative bg-purple-500 hover:bg-purple-600 text-white border-0 rounded-full px-6 py-2"
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />
-                  Cart
+                  Carrinho
                   {getTotalItems() > 0 && (
                     <Badge className="absolute -top-2 -right-2 bg-purple-500 text-white animate-bounce">
                       {getTotalItems()}
@@ -667,7 +667,7 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
               </div>
               <div className="relative">
                 <img
-                  src="/images/banner.png"
+                  src="/images/gus.jpg"
                   alt="Pharmacy Store Illustration"
                   className="w-full h-auto rounded-lg" />
               </div>
@@ -711,35 +711,35 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
         <Carousel
           title={
             selectedCategory === "lanches"
-              ? "🍔 Lanches"
+              ? "Lanches"
               : selectedCategory === "bebidas"
-              ? "🥤 Bebidas"
-              : "🍨 Sobremesas"
+              ? "Bebidas"
+              : "Sobremesas"
           }
           products={filteredProducts}
         />
       )
     ) : (
       // Farmácia - grid tradicional
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-5xl mx-auto">
         {filteredProducts.map((product) => (
-          <Card key={product.id} className="overflow-hidden hover:shadow-xl transition duration-300">
+          <Card key={product.id} className="overflow-hidden hover:shadow-2xl transition duration-300 scale-105">
             <CardHeader className="p-0">
-              <img src={product.image || "/placeholder.svg"} alt={product.name} className="w-full h-64 object-cover" />
+              <img src={product.image || "/placeholder.svg"} alt={product.name} className="w-full h-80 object-cover" />
             </CardHeader>
-            <CardContent className="p-6">
-              <CardTitle className="text-xl mb-3">{product.name}</CardTitle>
-              <CardDescription className="text-gray-600 mb-4">{product.description}</CardDescription>
+            <CardContent className="p-8">
+              <CardTitle className="text-2xl mb-4">{product.name}</CardTitle>
+              <CardDescription className="text-gray-600 mb-6">{product.description}</CardDescription>
               <div className="flex items-center justify-between">
-                <span className="text-3xl font-bold text-purple-600">R$ {product.price.toFixed(2)}</span>
+                <span className="text-4xl font-bold text-purple-600">R$ {product.price.toFixed(2)}</span>
               </div>
             </CardContent>
-            <CardFooter className="p-6 pt-0">
+            <CardFooter className="p-8 pt-0">
               <Button
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white text-lg py-3"
                 onClick={() => addToCart(product)}
               >
-                <Plus className="h-5 w-5 mr-2" /> Comprar
+                <Plus className="h-6 w-6 mr-2" /> Comprar
               </Button>
             </CardFooter>
           </Card>
@@ -835,7 +835,7 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
         aria-label="Secret transformation button"
       >
         <img
-          src="/images/demonn.png"
+          src="/images/walter.png"
           alt="demon"
           className="w-3 h-3 object-cover" />
       </button>
