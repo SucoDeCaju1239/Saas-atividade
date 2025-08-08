@@ -1,15 +1,16 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { ShoppingCart, Plus, Minus, Search, Star, Menu } from "lucide-react"
+import { ShoppingCart, Plus, Minus, Search, Star, Menu, ArrowLeft, CreditCard } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
-import { link } from "fs"
+import { Label } from "@/components/ui/label"
 import React from 'react';
+import { Check } from 'lucide-react'
 
 
 interface Product {
@@ -238,6 +239,8 @@ export default function Component() {
   const [selectedCategory, setSelectedCategory] = useState("todos")
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [addingToCart, setAddingToCart] = useState<number | null>(null)
+  const [showCheckout, setShowCheckout] = useState(false)
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false)
 
   const currentProducts = isPharmacyMode ? pharmacyProducts : fastFoodProducts
   const categories = isPharmacyMode ? ["todos"] : ["todos", "lanches", "bebidas", "sobremesas"]
@@ -299,10 +302,73 @@ const categorizedProducts = {
       setIsPharmacyMode(!isPharmacyMode)
       setCart([])
       setSelectedCategory(!isPharmacyMode ? "medicamentos" : "todos") // Já seleciona "medicamentos" ao ir para farmácia
+      setShowCheckout(false)
       setIsTransitioning(false)
     }, 500)
   }
 
+  const handleCheckout = () => {
+    setShowCheckout(true)
+  }
+
+  const handleBackToStore = () => {
+    setShowCheckout(false)
+  }
+
+  const handlePayment = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsProcessingPayment(true)
+    
+    // Simulate payment processing
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    
+    alert("Pagamento realizado com sucesso!")
+    setCart([])
+    setShowCheckout(false)
+    setIsProcessingPayment(false)
+  }
+
+  const plans = [
+    {
+      name: "Básico",
+      price: "R$ 9,90/mês",
+      description: "Ideal para quem está começando",
+      benefits: [
+        "5% de desconto em todas as compras",
+        "1 cupom de frete grátis por mês",
+        "Acesso a ofertas exclusivas"
+      ],
+      color: isPharmacyMode ? "bg-blue-500" : "bg-orange-500"
+    },
+    {
+      name: "Premium",
+      price: "R$ 19,90/mês",
+      description: "Para quem quer mais vantagens",
+      benefits: [
+        "10% de desconto em todas as compras",
+        "3 cupons de frete grátis por mês",
+        "Acesso prioritário a novos produtos",
+        "Suporte 24/7"
+      ],
+      color: isPharmacyMode ? "bg-purple-500" : "bg-green-500",
+      popular: true
+    },
+    {
+      name: "VIP",
+      price: "R$ 29,90/mês",
+      description: "A experiência completa",
+      benefits: [
+        "15% de desconto em todas as compras",
+        "Frete grátis ilimitado",
+        "Cupons especiais toda semana",
+        "Acesso a produtos exclusivos",
+        "Gerente de conta dedicado"
+      ],
+      color: isPharmacyMode ? "bg-indigo-500" : "bg-red-500"
+    }
+  ]
+
+// Remova o conteúdo de checkout do Carousel, mantendo apenas o carrossel de produtos:
 function Carousel({ title, products }: { title: React.ReactNode; products: Product[] }) {
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -353,19 +419,19 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
             <div className="p-4 flex flex-col justify-between h-[200px]">
               <div>
                 <h3
-  className="font-extrabold text-lg md:text-xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-red-500 to-yellow-600 drop-shadow-sm flex items-center gap-2 mb-1"
->
-  <span role="img" aria-label="categoria">
-    {product.category === "lanches"
-      ? "🍔"
-      : product.category === "bebidas"
-      ? "🥤"
-      : product.category === "sobremesas"
-      ? "🍨"
-      : "🛒"}
-  </span>
-  {product.name}
-</h3>
+                  className="font-extrabold text-lg md:text-xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-red-500 to-yellow-600 drop-shadow-sm flex items-center gap-2 mb-1"
+                >
+                  <span role="img" aria-label="categoria">
+                    {product.category === "lanches"
+                      ? "🍔"
+                      : product.category === "bebidas"
+                        ? "🥤"
+                        : product.category === "sobremesas"
+                          ? "🍨"
+                          : "🛒"}
+                  </span>
+                  {product.name}
+                </h3>
                 <p className="text-gray-600 text-sm mt-1 mb-2">{product.description}</p>
               </div>
               <div className="flex justify-between items-center mt-auto">
@@ -385,6 +451,151 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
   )
 }
 
+
+  if (showCheckout) {
+    return (
+      <div
+        className={`min-h-screen transition-all duration-500 ${
+          isPharmacyMode
+            ? "bg-gradient-to-br from-purple-100 via-blue-50 to-purple-200"
+            : "bg-gradient-to-br from-black via-gray-700 to-black"
+        }`}
+      >
+        {/* Checkout Header */}
+        <header className="p-6">
+  <div className="container mx-auto">
+    <div
+      className={`${
+        isPharmacyMode
+          ? "bg-gradient-to-r from-purple-200 to-blue-100"
+          : "bg-gradient-to-r from-orange-300 to-yellow-200"
+      } backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg`}
+    >
+      <div className="flex items-center justify-between">
+        <Button
+          variant="ghost"
+          onClick={handleBackToStore}
+          className="flex items-center space-x-2 hover:text-white hover:bg-orange-500 transition-colors"
+        >
+          <ArrowLeft className="h-5 w-5" />
+          <span>Voltar à loja</span>
+        </Button>
+        <h1 className="text-2xl font-bold text-gray-700">Finalizar Compra</h1>
+        <div className="w-24"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+        {/* Checkout Content */}
+        <section className="py-8">
+          <div className="container mx-auto px-6">
+            <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Payment Form */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <CreditCard className="h-5 w-5" />
+                    <span>Informações de Pagamento</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handlePayment} className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="firstName">Nome</Label>
+                        <Input id="firstName" placeholder="João" required />
+                      </div>
+                      <div>
+                        <Label htmlFor="lastName">Sobrenome</Label>
+                        <Input id="lastName" placeholder="Silva" required />
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="email">Email</Label>
+                      <Input id="email" type="email" placeholder="joao@email.com" required />
+                    </div>
+                    <div>
+                      <Label htmlFor="cardNumber">Número do Cartão</Label>
+                      <Input id="cardNumber" placeholder="1234 5678 9012 3456" required />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="expiry">Validade</Label>
+                        <Input id="expiry" placeholder="MM/AA" required />
+                      </div>
+                      <div>
+                        <Label htmlFor="cvv">CVV</Label>
+                        <Input id="cvv" placeholder="123" required />
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="address">Endereço</Label>
+                      <Input id="address" placeholder="Rua das Flores, 123" required />
+                    </div>
+                    <Button
+                      type="submit"
+                      className={`w-full ${
+                        isPharmacyMode ? "bg-purple-600 hover:bg-purple-700" : "bg-orange-500 hover:bg-orange-600"
+                      }`}
+                      disabled={isProcessingPayment}
+                    >
+                      {isProcessingPayment ? (
+                        <div className="flex items-center space-x-2">
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Processando...</span>
+                        </div>
+                      ) : (
+                        `Pagar R$ ${getTotalPrice().toFixed(2)}`
+                      )}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+
+              {/* Order Summary */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Resumo do Pedido</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {cart.map((item) => (
+                      <div key={item.id} className="flex justify-between items-center">
+                        <div>
+                          <h4 className="font-medium">{item.name}</h4>
+                          <p className="text-sm text-gray-500">Quantidade: {item.quantity}</p>
+                        </div>
+                        <span className="font-bold">R$ {(item.price * item.quantity).toFixed(2)}</span>
+                      </div>
+                    ))}
+                    <Separator />
+                    <div className="flex justify-between items-center text-lg font-bold">
+                      <span>Total:</span>
+                      <span>R$ {getTotalPrice().toFixed(2)}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Secret Button */}
+        <button
+          onClick={handleSecretTransformation}
+          className="fixed bottom-4 right-4 w-3 h-3 border-none cursor-pointer hover:opacity-80 transition-opacity duration-300"
+          aria-label="Secret transformation button"
+        >
+          <img
+            src="/images/walter.png"
+            alt="demon"
+            className="w-3 h-3 object-cover"
+          />
+        </button>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -490,7 +701,7 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
                         <span>Total:</span>
                         <span>R$ {getTotalPrice().toFixed(2)}</span>
                       </div>
-                      <Button className="w-full bg-orange-500 hover:bg-orange-600" size="lg">
+                      <Button className="w-full bg-orange-500 hover:bg-orange-600" size="lg" onClick={handleCheckout}>
                         Finalizar Pedido
                       </Button>
                     </>
@@ -575,7 +786,7 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
                         <span>Total:</span>
                         <span>R$ {getTotalPrice().toFixed(2)}</span>
                       </div>
-                      <Button className="w-full bg-purple-600 hover:bg-purple-700" size="lg">
+                      <Button className="w-full bg-purple-600 hover:bg-purple-700" size="lg" onClick={handleCheckout}>
                         Finalizar Pedido
                       </Button>
                     </>
@@ -749,6 +960,54 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
   </div>
 </section>
 
+      {/* Plans Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 text-blue-700">
+              {isPharmacyMode ? "Planos de Saúde" : "Planos Gourmet"}
+            </h2>
+            <p className="text-xl text-gray-600">
+              {isPharmacyMode 
+                ? "Escolha o plano ideal e receba cupons exclusivos para seus medicamentos"
+                : "Assine um plano e ganhe cupons especiais para suas refeições favoritas"
+              }
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {plans.map((plan, index) => (
+              <Card key={index} className={`relative overflow-hidden ${plan.popular ? 'ring-2 ring-yellow-400' : ''}`}>
+                {plan.popular && (
+                  <div className="absolute top-0 right-0 bg-yellow-400 text-black px-3 py-1 text-sm font-bold">
+                    POPULAR
+                  </div>
+                )}
+                <CardHeader className="text-center">
+                  <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
+                  <CardDescription className="text-gray-600">{plan.description}</CardDescription>
+                  <div className="text-3xl font-bold text-gray-800 mt-4">{plan.price}</div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {plan.benefits.map((benefit, benefitIndex) => (
+                      <li key={benefitIndex} className="flex items-center space-x-2">
+                        <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
+                        <span className="text-gray-700">{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter>
+                  <Button className={`w-full ${plan.color} hover:opacity-90 text-white`}>
+                    Assinar Plano
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
 <footer className={`${isPharmacyMode ? "bg-purple-900" : "bg-red-800"} text-white pt-12 pb-8`}>
