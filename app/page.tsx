@@ -26,6 +26,11 @@ interface CartItem extends Product {
   quantity: number
 }
 
+// Adicione este tipo para o plano no carrinho
+interface PlanCartItem extends CartItem {
+  planType: string
+}
+
 const fastFoodProducts: Product[] = [
   {
     id: 1,
@@ -235,7 +240,7 @@ const pharmacyProducts: Product[] = [
 
 export default function Component() {
   const [isPharmacyMode, setIsPharmacyMode] = useState(false)
-  const [cart, setCart] = useState<CartItem[]>([])
+  const [cart, setCart] = useState<(CartItem | PlanCartItem)[]>([])
   const [selectedCategory, setSelectedCategory] = useState("todos")
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [addingToCart, setAddingToCart] = useState<number | null>(null)
@@ -398,10 +403,10 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
       <div className="flex justify-between items-center mb-4 px-1">
         <div className="text-4xl md:text-5xl font-bold text-white">{title}</div>
         <div className="space-x-2 hidden sm:flex">
-          <button onClick={scrollLeft} className="px-2 py-1 bg-white rounded-full shadow hover:bg-gray-100">
+          <button onClick={scrollLeft} className="px-2 py-1 bg-red-500 rounded-md shadow hover:bg-red-800">
             ◀
           </button>
-          <button onClick={scrollRight} className="px-2 py-1 bg-white rounded-full shadow hover:bg-gray-100">
+          <button onClick={scrollRight} className="px-2 py-1 bg-red-500 rounded-md shadow hover:bg-red-800">
             ▶
           </button>
         </div>
@@ -462,7 +467,7 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
         }`}
       >
         {/* Checkout Header */}
-        <header className="p-6">
+        <header className="p-0">
   <div className="container mx-auto">
     <div
       className={`${
@@ -597,6 +602,28 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
     )
   }
 
+  const addPlanToCart = (plan: typeof plans[number]) => {
+    // Evita duplicidade de plano no carrinho
+    setCart((prevCart) => {
+      const alreadyAdded = prevCart.some(item => 'planType' in item && item.planType === plan.name)
+      if (alreadyAdded) return prevCart
+      return [
+        ...prevCart,
+        {
+          id: 1000 + Math.random(), // id único
+          name: `Plano ${plan.name}`,
+          description: plan.description,
+          price: Number(plan.price.replace(/[^\d,]/g, '').replace(',', '.')),
+          image: "",
+          category: "plano",
+          quantity: 1,
+          planType: plan.name
+        }
+      ]
+    })
+    setShowCheckout(true)
+  }
+
   return (
     <>
     <div
@@ -605,116 +632,130 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
           : "bg-gradient-to-br from-black via-gray-900 to-black"} ${isTransitioning ? "opacity-50 scale-95" : "opacity-100 scale-100"}`}
     >
       {/* Header with different styles for each mode */}
-      <header className={`${isPharmacyMode ? "p-6" : "p-6"}`}>
+      <header className={`${isPharmacyMode ? "p-0" : "p-0"}`}>
   <div className="container mx-auto">
     {!isPharmacyMode ? (
       // Fast Food Header
-      <div className="bg-gradient-to-r from-orange-300 to-yellow-200 rounded-full px-8 py-4 shadow-lg">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <img src="/images/Logo site.jpg" alt="Don Pollos Hermano" className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-blue-600" />
-            <div className="flex space-x-1">
-              <Star className="h-4 w-4 text-red-400 fill-current drop-shadow" />
-              <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
-              <Star className="h-4 w-4 text-blue-400 fill-current drop-shadow" />
-              <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
-              <Star className="h-4 w-4 text-purple-400 fill-current drop-shadow" />
+      <div className="bg-white shadow-lg px-8 py-6 flex flex-col items-center relative w-full rounded-b-2xl">
+  {/* Hambúrguer PNG centralizado */}
+  <img
+    src="/images/hamburguer.png"
+    alt="Hambúrguer"
+    className="w-32 h-32 object-contain mx-auto -mt-16 mb-2 drop-shadow-lg"
+    style={{ zIndex: 2 }}
+  />
+  {/* Logo e estrelas centralizados */}
+  <div className="flex flex-col items-center mb-2">
+    <img src="/images/Logo site.jpg" alt="Don Pollos Hermano" className="w-14 h-14 rounded-full object-cover shadow-md border-2 border-yellow-500 mb-2" />
+    <div className="flex space-x-1">
+      <Star className="h-4 w-4 text-red-400 fill-current drop-shadow" />
+      <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
+      <Star className="h-4 w-4 text-blue-400 fill-current drop-shadow" />
+      <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
+      <Star className="h-4 w-4 text-purple-400 fill-current drop-shadow" />
+    </div>
+  </div>
+  {/* Menu centralizado */}
+  <nav className="flex items-center justify-center space-x-8 mt-2">
+    <button
+      onClick={() => setSelectedCategory("todos")}
+      className={`font-medium transition-colors ${selectedCategory === "todos" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+    >
+      Todos
+    </button>
+    <button
+      onClick={() => setSelectedCategory("lanches")}
+      className={`font-medium transition-colors ${selectedCategory === "lanches" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+    >
+      Lanches
+    </button>
+    <button
+      onClick={() => setSelectedCategory("bebidas")}
+      className={`font-medium transition-colors ${selectedCategory === "bebidas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+    >
+      Bebidas
+    </button>
+    <button
+      onClick={() => setSelectedCategory("sobremesas")}
+      className={`font-medium transition-colors ${selectedCategory === "sobremesas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+    >
+      Sobremesas
+    </button>
+    <span className="text-gray-400">|</span>
+    <a href="#" className="text-gray-700 hover:text-red-700 font-medium transition-colors">
+      Sobre
+    </a>
+  </nav>
+  {/* Carrinho à direita, mas integrado ao header */}
+  <div className="absolute top-6 right-8">
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button
+          variant="outline"
+          className="relative bg-orange-500 hover:bg-orange-600 text-white border-0 rounded-full px-6 py-2"
+        >
+          <ShoppingCart className="h-5 w-5 mr-2" />
+          Carrinho
+          {getTotalItems() > 0 && (
+            <Badge className="absolute -top-2 -right-2 bg-red-500 text-white animate-bounce">
+              {getTotalItems()}
+            </Badge>
+          )}
+        </Button>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Seu Carrinho</SheetTitle>
+          <SheetDescription>
+            {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
+          </SheetDescription>
+        </SheetHeader>
+        <div className="mt-6 space-y-4">
+          {cart.map((item) => (
+            <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
+              <div className="flex-1">
+                <h4 className="font-medium">{item.name}</h4>
+                <p className="text-sm text-muted-foreground">
+                  {item.category === "plano"
+                    ? "Assinatura de plano"
+                    : `R$ ${item.price.toFixed(2)} cada`}
+                </p>
+              </div>
+              <div className="flex items-center space-x-2">
+                {item.category !== "plano" && (
+                  <>
+                    <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
+                      <Minus className="h-4 w-4" />
+                    </Button>
+                    <span className="w-8 text-center">{item.quantity}</span>
+                    <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-
-          <nav className="hidden lg:flex items-center space-x-8">
-            <button
-              onClick={() => setSelectedCategory("todos")}
-              className={`font-medium transition-colors ${selectedCategory === "todos" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-            >
-              Todos
-            </button>
-            <button
-              onClick={() => setSelectedCategory("lanches")}
-              className={`font-medium transition-colors ${selectedCategory === "lanches" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-            >
-              Lanches
-            </button>
-            <button
-              onClick={() => setSelectedCategory("bebidas")}
-              className={`font-medium transition-colors ${selectedCategory === "bebidas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-            >
-              Bebidas
-            </button>
-            <button
-              onClick={() => setSelectedCategory("sobremesas")}
-              className={`font-medium transition-colors ${selectedCategory === "sobremesas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-            >
-              Sobremesas
-            </button>
-            <span className="text-gray-400">|</span>
-            <a href="#" className="text-gray-700 hover:text-red-700 font-medium transition-colors">
-              About
-            </a>
-          </nav>
-
-          <div className="flex items-center space-x-4">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="relative bg-orange-500 hover:bg-orange-600 text-white border-0 rounded-full px-6 py-2"
-                >
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  Carrinho
-                  {getTotalItems() > 0 && (
-                    <Badge className="absolute -top-2 -right-2 bg-red-500 text-white animate-bounce">
-                      {getTotalItems()}
-                    </Badge>
-                  )}
-                </Button>
-              </SheetTrigger>
-              <SheetContent>
-                <SheetHeader>
-                  <SheetTitle>Seu Carrinho</SheetTitle>
-                  <SheetDescription>
-                    {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
-                  </SheetDescription>
-                </SheetHeader>
-                <div className="mt-6 space-y-4">
-                  {cart.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
-                      <div className="flex-1">
-                        <h4 className="font-medium">{item.name}</h4>
-                        <p className="text-sm text-muted-foreground">R$ {item.price.toFixed(2)} cada</p>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
-                          <Minus className="h-4 w-4" />
-                        </Button>
-                        <span className="w-8 text-center">{item.quantity}</span>
-                        <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
-                          <Plus className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                  {cart.length > 0 && (
-                    <>
-                      <Separator />
-                      <div className="flex justify-between items-center font-bold text-lg">
-                        <span>Total:</span>
-                        <span>R$ {getTotalPrice().toFixed(2)}</span>
-                      </div>
-                      <Button className="w-full bg-orange-500 hover:bg-orange-600" size="lg" onClick={handleCheckout}>
-                        Finalizar Pedido
-                      </Button>
-                    </>
-                  )}
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
+          ))}
+          {cart.length > 0 && (
+            <>
+              <Separator />
+              <div className="flex justify-between items-center font-bold text-lg">
+                <span>Total:</span>
+                <span>R$ {getTotalPrice().toFixed(2)}</span>
+              </div>
+              <Button className="w-full bg-orange-500 hover:bg-orange-600" size="lg" onClick={handleCheckout}>
+                Finalizar Pedido
+              </Button>
+            </>
+          )}
         </div>
-      </div>
+      </SheetContent>
+    </Sheet>
+  </div>
+</div>
     ) : (
-      // Pharmacy Header - agora igual ao fast food
-      <div className="bg-gradient-to-r from-purple-200 to-blue-100 rounded-full px-8 py-4 shadow-lg">
+      // Pharmacy Header
+      <div className="bg-gradient-to-r from-purple-200 to-blue-100 px-8 py-4 shadow-lg w-full rounded-b-full">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <img src="/images/gus.jpg" alt="Logo" className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-gray-400" />
@@ -766,7 +807,11 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
                     <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
                       <div className="flex-1">
                         <h4 className="font-medium">{item.name}</h4>
-                        <p className="text-sm text-muted-foreground">R$ {item.price.toFixed(2)} cada</p>
+                        <p className="text-sm text-muted-foreground">
+                          {item.category === "plano"
+                            ? "Assinatura de plano"
+                            : `R$ ${item.price.toFixed(2)} cada`}
+                        </p>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
@@ -999,7 +1044,10 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <Button className={`w-full ${plan.color} hover:opacity-90 text-white`}>
+                  <Button
+                    className={`w-full ${plan.color} hover:opacity-90 text-white`}
+                    onClick={() => addPlanToCart(plan)}
+                  >
                     Assinar Plano
                   </Button>
                 </CardFooter>
