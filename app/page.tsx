@@ -637,121 +637,124 @@ function Carousel({ title, products }: { title: React.ReactNode; products: Produ
     {!isPharmacyMode ? (
       // Fast Food Header
       <div className="bg-white shadow-lg px-8 py-6 flex flex-col items-center relative w-full rounded-b-2xl">
-  {/* Hambúrguer PNG centralizado */}
-  <img
-    src="/images/hamburguer.png"
-    alt="Hambúrguer"
-    className="w-32 h-32 object-contain mx-auto -mt-16 mb-2 drop-shadow-lg"
-    style={{ zIndex: 2 }}
-  />
-  {/* Logo e estrelas centralizados */}
-  <div className="flex flex-col items-center mb-2">
-    <img src="/images/Logo site.jpg" alt="Don Pollos Hermano" className="w-14 h-14 rounded-full object-cover shadow-md border-2 border-yellow-500 mb-2" />
-    <div className="flex space-x-1">
-      <Star className="h-4 w-4 text-red-400 fill-current drop-shadow" />
-      <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
-      <Star className="h-4 w-4 text-blue-400 fill-current drop-shadow" />
-      <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
-      <Star className="h-4 w-4 text-purple-400 fill-current drop-shadow" />
-    </div>
-  </div>
-  {/* Menu centralizado */}
-  <nav className="flex items-center justify-center space-x-8 mt-2">
-    <button
-      onClick={() => setSelectedCategory("todos")}
-      className={`font-medium transition-colors ${selectedCategory === "todos" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-    >
-      Todos
-    </button>
-    <button
-      onClick={() => setSelectedCategory("lanches")}
-      className={`font-medium transition-colors ${selectedCategory === "lanches" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-    >
-      Lanches
-    </button>
-    <button
-      onClick={() => setSelectedCategory("bebidas")}
-      className={`font-medium transition-colors ${selectedCategory === "bebidas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-    >
-      Bebidas
-    </button>
-    <button
-      onClick={() => setSelectedCategory("sobremesas")}
-      className={`font-medium transition-colors ${selectedCategory === "sobremesas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-    >
-      Sobremesas
-    </button>
-    <span className="text-gray-400">|</span>
-    <a href="#" className="text-gray-700 hover:text-red-700 font-medium transition-colors">
-      Sobre
-    </a>
-  </nav>
-  {/* Carrinho à direita, mas integrado ao header */}
-  <div className="absolute top-6 right-8">
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button
-          variant="outline"
-          className="relative bg-orange-500 hover:bg-orange-600 text-white border-0 rounded-full px-6 py-2"
-        >
-          <ShoppingCart className="h-5 w-5 mr-2" />
-          Carrinho
-          {getTotalItems() > 0 && (
-            <Badge className="absolute -top-2 -right-2 bg-red-500 text-white animate-bounce">
-              {getTotalItems()}
-            </Badge>
-          )}
-        </Button>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Seu Carrinho</SheetTitle>
-          <SheetDescription>
-            {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
-          </SheetDescription>
-        </SheetHeader>
-        <div className="mt-6 space-y-4">
-          {cart.map((item) => (
-            <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
-              <div className="flex-1">
-                <h4 className="font-medium">{item.name}</h4>
-                <p className="text-sm text-muted-foreground">
-                  {item.category === "plano"
-                    ? "Assinatura de plano"
-                    : `R$ ${item.price.toFixed(2)} cada`}
-                </p>
-              </div>
-              <div className="flex items-center space-x-2">
-                {item.category !== "plano" && (
-                  <>
-                    <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="w-8 text-center">{item.quantity}</span>
-                    <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </>
-                )}
-              </div>
-            </div>
-          ))}
-          {cart.length > 0 && (
-            <>
-              <Separator />
-              <div className="flex justify-between items-center font-bold text-lg">
-                <span>Total:</span>
-                <span>R$ {getTotalPrice().toFixed(2)}</span>
-              </div>
-              <Button className="w-full bg-orange-500 hover:bg-orange-600" size="lg" onClick={handleCheckout}>
-                Finalizar Pedido
-              </Button>
-            </>
-          )}
+        {/* Hambúrguer PNG centralizado */}
+        <img
+          src="/images/hamburguer.png"
+          alt="Hambúrguer"
+          className="w-32 h-32 object-contain mx-auto -mt-16 mb-2 drop-shadow-lg"
+          style={{ zIndex: 2 }}
+        />
+        {/* Logo e estrelas centralizados */}
+        <div className="flex flex-col items-center mb-2">
+          <img src="/images/Logo site.jpg" alt="Don Pollos Hermano" className="w-14 h-14 rounded-full object-cover shadow-md border-2 border-yellow-500 mb-2" />
+          <div className="flex space-x-1">
+            <Star className="h-4 w-4 text-red-400 fill-current drop-shadow" />
+            <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
+            <Star className="h-4 w-4 text-blue-400 fill-current drop-shadow" />
+            <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
+            <Star className="h-4 w-4 text-purple-400 fill-current drop-shadow" />
+          </div>
         </div>
-      </SheetContent>
-    </Sheet>
-  </div>
+        {/* Menu e carrinho alinhados horizontalmente */}
+        <nav className="flex items-center justify-center gap-8 mt-2 w-full max-w-2xl mx-auto">
+          <div className="flex items-center gap-8">
+            <button
+              onClick={() => setSelectedCategory("todos")}
+              className={`font-medium transition-colors ${selectedCategory === "todos" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+            >
+              Todos
+            </button>
+            <button
+              onClick={() => setSelectedCategory("lanches")}
+              className={`font-medium transition-colors ${selectedCategory === "lanches" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+            >
+              Lanches
+            </button>
+            <button
+              onClick={() => setSelectedCategory("bebidas")}
+              className={`font-medium transition-colors ${selectedCategory === "bebidas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+            >
+              Bebidas
+            </button>
+            <button
+              onClick={() => setSelectedCategory("sobremesas")}
+              className={`font-medium transition-colors ${selectedCategory === "sobremesas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
+            >
+              Sobremesas
+            </button>
+            <span className="text-gray-400">|</span>
+            <a href="#" className="text-gray-700 hover:text-red-700 font-medium transition-colors">
+              Sobre
+            </a>
+          </div>
+          {/* Carrinho alinhado na mesma linha */}
+          <div className="flex items-center ml-auto">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="relative bg-orange-500 hover:bg-orange-600 text-white border-0 rounded-full px-6 py-2"
+                >
+                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  Carrinho
+                  {getTotalItems() > 0 && (
+                    <Badge className="absolute -top-2 -right-2 bg-red-500 text-white animate-bounce">
+                      {getTotalItems()}
+                    </Badge>
+                  )}
+                </Button>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Seu Carrinho</SheetTitle>
+                  <SheetDescription>
+                    {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="mt-6 space-y-4">
+                  {cart.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex-1">
+                        <h4 className="font-medium">{item.name}</h4>
+                        <p className="text-sm text-muted-foreground">
+                          {item.category === "plano"
+                            ? "Assinatura de plano"
+                            : `R$ ${item.price.toFixed(2)} cada`}
+                        </p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        {item.category !== "plano" && (
+                          <>
+                            <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
+                              <Minus className="h-4 w-4" />
+                            </Button>
+                            <span className="w-8 text-center">{item.quantity}</span>
+                            <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
+                              <Plus className="h-4 w-4" />
+                            </Button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                  {cart.length > 0 && (
+                    <>
+                      <Separator />
+                      <div className="flex justify-between items-center font-bold text-lg">
+                        <span>Total:</span>
+                        <span>R$ {getTotalPrice().toFixed(2)}</span>
+                      </div>
+                      <Button className="w-full bg-orange-500 hover:bg-orange-600" size="lg" onClick={handleCheckout}>
+                        Finalizar Pedido
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </nav>
+        {/* Carrinho à direita, mas integrado ao header removido */}
 </div>
     ) : (
       // Pharmacy Header
