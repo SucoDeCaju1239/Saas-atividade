@@ -603,10 +603,11 @@ export default function Component() {
                   <h3 className="text-4xl font-bold text-white mb-12">Nossa Equipe</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {[
-                      { name: "Carlos Hermano", role: "Fundador & CEO", image: "Carlos+CEO" },
-                      { name: "Miguel Hermano", role: "Chef Executivo", image: "Miguel+Chef" },
-                      { name: "Ana Silva", role: "Gerente Geral", image: "Ana+Manager" },
-                      { name: "João Santos", role: "Supervisor de Qualidade", image: "Joao+Quality" },
+                      { name: "Maykon Sullyvan", role: "Programador front-end e designer", image: "Carlos+CEO" },
+                      { name: "Matheus Ribeiro", role: "Programador fornt-end", image: "Miguel+Chef" },
+                      { name: "Gabriel Anoé", role: "Programador back-end", image: "Ana+Manager" },
+                      { name: "Arthur Santos", role: "Programador back-end", image: "Joao+Quality" },
+                      { name: "Joaquim Squarça", role: "Integrante", image: "Joao+Quality" },
                     ].map((member, index) => (
                       <Card key={index} className="bg-white/90 backdrop-blur-sm">
                         <CardHeader className="text-center">
@@ -716,10 +717,10 @@ export default function Component() {
                   <h3 className="text-4xl font-bold text-gray-800 mb-12">Nossos Especialistas</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {[
-                      { name: "Dr. Gustavo Fring", role: "Diretor Técnico", image: "Gustavo+Director" },
-                      { name: "Dra. Maria Santos", role: "Farmacêutica Clínica", image: "Maria+Pharmacist" },
-                      { name: "Dr. Pedro Lima", role: "Especialista em Medicamentos", image: "Pedro+Specialist" },
-                      { name: "Dra. Ana Costa", role: "Consultora em Saúde", image: "Ana+Consultant" },
+                      { name: "Gustavo Fring", role: "Diretor Técnico", image: "Gustavo+Director" },
+                      { name: "Don Pollo", role: "Farmacêutica Clínica", image: "Maria+Pharmacist" },
+                      { name: "Mr. White", role: "Especialista em Medicamentos", image: "Pedro+Specialist" },
+                      { name: "Pinkman", role: "Consultora em Saúde", image: "Ana+Consultant" },
                     ].map((member, index) => (
                       <Card key={index} className="bg-white/90 backdrop-blur-sm">
                         <CardHeader className="text-center">
@@ -744,11 +745,11 @@ export default function Component() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
                   <h4 className="text-xl font-semibold text-gray-800 mb-2">Telefone</h4>
-                  <p className="text-gray-600">(11) 4002-8922</p>
+                  <p className="text-gray-600">(13) 997979068</p>
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-800 mb-2">Email</h4>
-                  <p className="text-gray-600">contato@{isPharmacyMode ? "metapharma" : "donpollos"}.com</p>
+                  <p className="text-gray-600">maykonsullyvan12@gmail{isPharmacyMode ? "" : ""}.com</p>
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-gray-800 mb-2">Endereço</h4>
