@@ -492,13 +492,19 @@ export default function Component() {
         {/* About Us Header */}
         <header className="p-6">
           <div className="container mx-auto">
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg">
+            <div
+              className={
+                isPharmacyMode
+                  ? "bg-purple-700 backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg"
+                  : "bg-yellow-600 backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg"
+              }
+            >
               <div className="flex items-center justify-between">
                 <Button variant="ghost" onClick={handleBackFromAbout} className="flex items-center space-x-2">
                   <ArrowLeft className="h-5 w-5" />
                   <span>Voltar</span>
                 </Button>
-                <h1 className="text-2xl font-bold text-gray-800">
+                <h1 className={`text-2xl font-bold ${isPharmacyMode ? "text-white" : "text-gray-900"}`}>
                   {isPharmacyMode ? "Sobre a Metapharma" : "Sobre Don Pollos Hermano"}
                 </h1>
                 <div className="w-24"></div>
@@ -575,22 +581,18 @@ export default function Component() {
                     <div>
                       <h3 className="text-3xl font-bold text-gray-800 mb-6">Como Tudo Começou</h3>
                       <p className="text-gray-700 mb-4 leading-relaxed">
-                        Em 2008, os irmãos Carlos e Miguel decidiram transformar a receita secreta de frango frito da
-                        avó em um negócio familiar. O que começou como um pequeno trailer de comida se tornou uma das
-                        redes de fast food mais queridas da região.
+                        Começou através da atividade proposta pelo professor Paulo Montier, com a criação de um saas de tema livre, onde resolvemos fazer em homenagem à serie Breaking Bad, junto do meme do Don Pollo.
                       </p>
                       <p className="text-gray-700 mb-4 leading-relaxed">
-                        Nosso molho especial, que combina ketchup artesanal com temperos únicos, continua sendo
-                        preparado seguindo a receita original, mantendo o sabor que conquistou milhares de clientes.
+                        Nosso site mostra toda nossa capacidade criativa em reimaginar um site de fast food, com cárdapio e variações de lanches e bebidas reais.
                       </p>
                       <p className="text-gray-700 leading-relaxed">
-                        Hoje, com mais de 15 anos de história, continuamos fiéis aos nossos valores: qualidade, sabor e
-                        atendimento familiar que faz a diferença.
+                        A apresentação da idéia do projeto já foi feito com muito sucesso e a apresentação do protótipo será realizada nesta terça feira.
                       </p>
                     </div>
                     <div className="relative">
                       <img
-                        src="/placeholder.svg?height=400&width=500&text=Nossa+Historia"
+                        src="/images/Logo site.jpg?height=400&width=500&text=Nossa+Historia"
                         alt="História do restaurante"
                         className="w-full h-auto rounded-2xl shadow-lg"
                       />
@@ -603,24 +605,24 @@ export default function Component() {
                   <h3 className="text-4xl font-bold text-white mb-12">Nossa Equipe</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {[
-                      { name: "Maykon Sullyvan", role: "Programador front-end e designer", image: "Carlos+CEO" },
-                      { name: "Matheus Ribeiro", role: "Programador fornt-end", image: "Miguel+Chef" },
-                      { name: "Gabriel Anoé", role: "Programador back-end", image: "Ana+Manager" },
-                      { name: "Arthur Santos", role: "Programador back-end", image: "Joao+Quality" },
-                      { name: "Joaquim Squarça", role: "Integrante", image: "Joao+Quality" },
-                    ].map((member, index) => (
-                      <Card key={index} className="bg-white/90 backdrop-blur-sm">
-                        <CardHeader className="text-center">
-                          <img
-                            src={`/ceholder-svg-key-2oeot-height-200-width-200-text-.jpg?key=2oeot&height=200&width=200&text=${member.image}`}
-                            alt={member.name}
-                            className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                          />
-                          <CardTitle className="text-xl">{member.name}</CardTitle>
-                          <CardDescription className="text-red-600 font-semibold">{member.role}</CardDescription>
-                        </CardHeader>
-                      </Card>
-                    ))}
+      { name: "Maykon Sullyvan", role: "Programador front-end e designer", image: "/images/gostoso.jpeg" },
+      { name: "Matheus Ribeiro", role: "Programador front-end", image: "/images/matheus.jpeg" },
+      { name: "Gabriel Anoé", role: "Programador back-end", image: "/images/gabriel.jpeg" },
+      { name: "Arthur Santos", role: "Programador back-end", image: "/images/arthur.jpeg" },
+      { name: "Joaquim Squarça", role: "Integrante", image: "/images/joaquim.jpeg" },
+    ].map((member, index) => (
+      <Card key={index} className="bg-white/90 backdrop-blur-sm">
+        <CardHeader className="text-center">
+          <img
+            src={member.image}
+            alt={member.name}
+            className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-yellow-500"
+          />
+          <CardTitle className="text-xl">{member.name}</CardTitle>
+          <CardDescription className="text-red-600 font-semibold">{member.role}</CardDescription>
+        </CardHeader>
+      </Card>
+    ))}
                   </div>
                 </div>
               </>
@@ -631,8 +633,8 @@ export default function Component() {
                 <div className="text-center mb-16">
                   <h2 className="text-5xl font-bold text-gray-800 mb-6">Nossa Missão</h2>
                   <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                    A Metapharma nasceu com o propósito de revolucionar o cuidado com a saúde, oferecendo medicamentos
-                    de qualidade com atendimento humanizado e tecnologia de ponta.
+                    A Metapharma nasceu com o propósito de revolucionar o cuidado com a venda e transporte de drogas, oferecendo medicamentos
+                    de qualidade com atendimento humanizado e tecnologia de ponta, com efeitos mais prolongados.
                   </p>
                 </div>
 
@@ -676,7 +678,7 @@ export default function Component() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-gray-700 text-center">
-                        Utilizamos tecnologia avançada para oferecer soluções modernas e eficientes em saúde.
+                        Utilizamos tecnologia avançada para oferecer melhorias modernas e eficientes para maior pureza da meta.
                       </p>
                     </CardContent>
                   </Card>
@@ -688,18 +690,15 @@ export default function Component() {
                     <div>
                       <h3 className="text-3xl font-bold text-gray-800 mb-6">Nossa Trajetória</h3>
                       <p className="text-gray-700 mb-4 leading-relaxed">
-                        Fundada em 2015 por um grupo de farmacêuticos visionários, a Metapharma surgiu com o objetivo de
-                        transformar a experiência de cuidado com a saúde, combinando tradição farmacêutica com inovação
-                        tecnológica.
+                        Tudo começou com o senhor Gus Fring, que resolveu criar uma máscara de rede de fast-food para assim lucrar no mercado negro com o seu negócio.
                       </p>
                       <p className="text-gray-700 mb-4 leading-relaxed">
-                        Nossa equipe multidisciplinar trabalha incansavelmente para garantir que cada cliente receba não
-                        apenas medicamentos de qualidade, mas também orientação especializada e acompanhamento
-                        personalizado.
+                        Nossa equipe trabalha incansavelmente para garantir que cada cliente receba não
+                        apenas medicamentos de qualidade, mas também a maior pureza da metanfetamina no mercado.
                       </p>
                       <p className="text-gray-700 leading-relaxed">
-                        Hoje, somos referência em atendimento farmacêutico, sempre priorizando a segurança, eficácia e
-                        bem-estar de nossos clientes.
+                        Hoje, somos referência na venda de drogas, sempre priorizando a segurança, eficácia e
+                        a colaboração com os nossos clientes.
                       </p>
                     </div>
                     <div className="relative">
@@ -717,17 +716,17 @@ export default function Component() {
                   <h3 className="text-4xl font-bold text-gray-800 mb-12">Nossos Especialistas</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {[
-                      { name: "Gustavo Fring", role: "Diretor Técnico", image: "Gustavo+Director" },
-                      { name: "Don Pollo", role: "Farmacêutica Clínica", image: "Maria+Pharmacist" },
-                      { name: "Mr. White", role: "Especialista em Medicamentos", image: "Pedro+Specialist" },
-                      { name: "Pinkman", role: "Consultora em Saúde", image: "Ana+Consultant" },
-                    ].map((member, index) => (
-                      <Card key={index} className="bg-white/90 backdrop-blur-sm">
-                        <CardHeader className="text-center">
-                          <img
-                            src={`/ceholder-svg-key-fpass-height-200-width-200-text-.jpg?key=fpass&height=200&width=200&text=${member.image}`}
-                            alt={member.name}
-                            className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+                      { name: "Gustavo Fring", role: "CEO", image: "/images/fring.jpeg" },
+                      { name: "Mr. White", role: "Sócio", image: "/images/White.png" },
+                      { name: "Don Pollo", role: "Sócio", image: "/images/pollo.jpg" },
+                      { name: "Pinkman", role: "Sócio", image: "/images/jesse.jpeg" },
+                      ].map((member, index) => (
+                        <Card key={index} className="bg-white/90 backdrop-blur-sm">
+                          <CardHeader className="text-center">
+                            <img
+                              src={member.image}
+                              alt={member.name}
+                            className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-yellow-500"
                           />
                           <CardTitle className="text-xl">{member.name}</CardTitle>
                           <CardDescription className="text-purple-600 font-semibold">{member.role}</CardDescription>
@@ -784,28 +783,32 @@ export default function Component() {
         {/* Checkout Header */}
         <header className="p-0">
           <div className="container mx-auto">
-            <div
-              className={`${
-                isPharmacyMode
-                  ? "bg-gradient-to-r from-purple-200 to-blue-100"
-                  : "bg-gradient-to-r from-orange-300 to-yellow-200"
-              } backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg`}
-            >
-              <div className="flex items-center justify-between">
-                <Button
-                  variant="ghost"
-                  onClick={handleBackToStore}
-                  className="flex items-center space-x-2 hover:text-white hover:bg-orange-500 transition-colors"
-                >
-                  <ArrowLeft className="h-5 w-5" />
-                  <span>Voltar à loja</span>
-                </Button>
-                <h1 className="text-2xl font-bold text-gray-700">Finalizar Compra</h1>
-                <div className="w-24"></div>
-              </div>
-            </div>
-          </div>
-        </header>
+    <div
+      className={`${
+        isPharmacyMode
+          ? "bg-gradient-to-r from-purple-200 to-blue-100"
+          : "bg-gradient-to-r from-orange-300 to-yellow-200"
+      } backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg`}
+    >
+      <div className="flex items-center justify-between">
+        <Button
+          variant="ghost"
+          onClick={handleBackToStore}
+          className={`flex items-center space-x-2 transition-colors ${
+            isPharmacyMode
+              ? "bg-purple-600 text-white hover:bg-purple-700"
+              : "hover:text-white hover:bg-orange-500"
+          }`}
+        >
+          <ArrowLeft className="h-5 w-5" />
+          <span>Voltar à loja</span>
+        </Button>
+        <h1 className="text-2xl font-bold text-gray-700">Finalizar Compra</h1>
+        <div className="w-24"></div>
+      </div>
+    </div>
+  </div>
+</header>
 
         {/* Checkout Content */}
         <section className="py-8">
@@ -950,240 +953,264 @@ export default function Component() {
             {!isPharmacyMode ? (
               // Fast Food Header
               <div className="bg-white shadow-lg px-8 py-6 flex flex-col items-center relative w-full rounded-b-2xl">
-                {/* Hambúrguer PNG centralizado */}
+                {/* Imagem de fundo do hambúrguer */}
                 <img
-                  src="/images/hamburguer.png"
-                  alt="Hambúrguer"
-                  className="w-32 h-32 object-contain mx-auto -mt-16 mb-2 drop-shadow-lg"
-                  style={{ zIndex: 2 }}
+                  src="/images/burguer_fundo.jpg"
+                  alt="Fundo Hambúrguer"
+                  className="absolute inset-0 w-full h-full object-cover rounded-b-2xl pointer-events-none"
+                  style={{
+                    zIndex: 0,
+                    filter: "brightness(0.6)",
+                    opacity: 1,
+                  }}
                 />
-                {/* Logo e estrelas centralizados */}
-                <div className="flex flex-col items-center mb-2">
-                  <img
-                    src="/images/Logo site.jpg"
-                    alt="Don Pollos Hermano"
-                    className="w-14 h-14 rounded-full object-cover shadow-md border-2 border-yellow-500 mb-2"
-                  />
-                  <div className="flex space-x-1">
-                    <Star className="h-4 w-4 text-red-400 fill-current drop-shadow" />
-                    <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
-                    <Star className="h-4 w-4 text-blue-400 fill-current drop-shadow" />
-                    <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
-                    <Star className="h-4 w-4 text-purple-400 fill-current drop-shadow" />
-                  </div>
-                </div>
-                {/* Menu e carrinho alinhados horizontalmente */}
-                <nav className="flex items-center justify-center gap-8 mt-2 w-full max-w-2xl mx-auto">
-                  <div className="flex items-center gap-8">
-                    <button
-                      onClick={() => setSelectedCategory("todos")}
-                      className={`font-medium transition-colors ${selectedCategory === "todos" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-                    >
-                      Todos
-                    </button>
-                    <button
-                      onClick={() => setSelectedCategory("lanches")}
-                      className={`font-medium transition-colors ${selectedCategory === "lanches" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-                    >
-                      Lanches
-                    </button>
-                    <button
-                      onClick={() => setSelectedCategory("bebidas")}
-                      className={`font-medium transition-colors ${selectedCategory === "bebidas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-                    >
-                      Bebidas
-                    </button>
-                    <button
-                      onClick={() => setSelectedCategory("sobremesas")}
-                      className={`font-medium transition-colors ${selectedCategory === "sobremesas" ? "text-red-700 font-bold" : "text-gray-700 hover:text-red-700"}`}
-                    >
-                      Sobremesas
-                    </button>
-                    <span className="text-gray-400">|</span>
-                    {/* ============================================ */}
-                    {/* 🔥 BOTÃO SOBRE - AQUI ESTÁ O DESTAQUE! */}
-                    {/* ============================================ */}
-                    <button
-                      onClick={handleShowAboutUs}
-                      className="text-gray-700 hover:text-red-700 font-medium transition-colors"
-                    >
-                      Sobre
-                    </button>
-                  </div>
-                  {/* Carrinho alinhado na mesma linha */}
-                  <div className="flex items-center ml-auto">
-                    <Sheet>
-                      <SheetTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="relative bg-orange-500 hover:bg-orange-600 text-white border-0 rounded-full px-6 py-2"
-                        >
-                          <ShoppingCart className="h-5 w-5 mr-2" />
-                          Carrinho
-                          {getTotalItems() > 0 && (
-                            <Badge className="absolute -top-2 -right-2 bg-red-500 text-white animate-bounce">
-                              {getTotalItems()}
-                            </Badge>
-                          )}
-                        </Button>
-                      </SheetTrigger>
-                      <SheetContent>
-                        <SheetHeader>
-                          <SheetTitle>Seu Carrinho</SheetTitle>
-                          <SheetDescription>
-                            {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
-                          </SheetDescription>
-                        </SheetHeader>
-                        <div className="mt-6 space-y-4">
-                          {cart.map((item) => (
-                            <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
-                              <div className="flex-1">
-                                <h4 className="font-medium">{item.name}</h4>
-                                <p className="text-sm text-muted-foreground">
-                                  {item.category === "plano"
-                                    ? "Assinatura de plano"
-                                    : `R$ ${item.price.toFixed(2)} cada`}
-                                </p>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                {item.category !== "plano" && (
-                                  <>
-                                    <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
-                                      <Minus className="h-4 w-4" />
-                                    </Button>
-                                    <span className="w-8 text-center">{item.quantity}</span>
-                                    <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
-                                      <Plus className="h-4 w-4" />
-                                    </Button>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                          {cart.length > 0 && (
-                            <>
-                              <Separator />
-                              <div className="flex justify-between items-center font-bold text-lg">
-                                <span>Total:</span>
-                                <span>R$ {getTotalPrice().toFixed(2)}</span>
-                              </div>
-                              <Button
-                                className="w-full bg-orange-500 hover:bg-orange-600"
-                                size="lg"
-                                onClick={handleCheckout}
-                              >
-                                Finalizar Pedido
-                              </Button>
-                            </>
-                          )}
-                        </div>
-                      </SheetContent>
-                    </Sheet>
-                  </div>
-                </nav>
-                {/* Carrinho à direita, mas integrado ao header removido */}
-              </div>
-            ) : (
-              // Pharmacy Header
-              <div className="bg-gradient-to-r from-purple-200 to-blue-100 px-8 py-4 shadow-lg w-full rounded-b-full">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
+                {/* Fundo semitransparente para o conteúdo */}
+                <div
+      className="absolute inset-0 w-full h-full rounded-b-2xl"
+      style={{
+        background: "rgba(0, 0, 0, 0.75)",
+        zIndex: 1,
+        pointerEvents: "none",
+      }}
+    />
+                {/* Conteúdo do header */}
+                <div className="relative z-10 flex flex-col items-center w-full">
+                  {/* Logo e estrelas centralizados */}
+                  <div className="flex flex-col items-center mb-2" style={{ zIndex: 2, position: "relative" }}>
                     <img
-                      src="/images/gus.jpg"
-                      alt="Logo"
-                      className="w-12 h-12 rounded-full object-cover shadow-md border-2 border-gray-400"
+                      src="/images/Logo site.jpg"
+                      alt="Don Pollos Hermano"
+                      className="w-14 h-14 rounded-full object-cover shadow-md border-2 border-yellow-500 mb-2"
                     />
                     <div className="flex space-x-1">
-                      <Star className="h-4 w-4 text-purple-400 fill-current" />
-                      <Star className="h-4 w-4 text-blue-400 fill-current" />
-                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <Star className="h-4 w-4 text-blue-400 fill-current" />
-                      <Star className="h-4 w-4 text-purple-400 fill-current" />
+                      <Star className="h-4 w-4 text-red-400 fill-current drop-shadow" />
+                      <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
+                      <Star className="h-4 w-4 text-blue-400 fill-current drop-shadow" />
+                      <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
+                      <Star className="h-4 w-4 text-purple-400 fill-current drop-shadow" />
                     </div>
                   </div>
-                  <nav className="hidden lg:flex items-center space-x-8">
-                    <button
-                      onClick={() => setSelectedCategory("medicamentos")}
-                      className={`font-medium transition-colors ${selectedCategory === "medicamentos" ? "text-purple-700 font-bold" : "text-gray-700 hover:text-purple-700"}`}
-                    >
-                      Medicamentos
-                    </button>
-                    <span className="text-gray-400">|</span>
-                    {/* ============================================ */}
-                    {/* 🔥 BOTÃO SOBRE - AQUI ESTÁ O DESTAQUE! */}
-                    {/* ============================================ */}
-                    <button
-                      onClick={handleShowAboutUs}
-                      className="text-gray-700 hover:text-purple-700 font-medium transition-colors"
-                    >
-                      Sobre
-                    </button>
+                  {/* Menu e carrinho alinhados horizontalmente */}
+                  <nav className="flex items-center justify-center gap-8 mt-2 w-full max-w-2xl mx-auto">
+                    <div className="flex items-center gap-8">
+                      <button
+                        onClick={() => setSelectedCategory("todos")}
+                        className={`font-medium transition-colors ${selectedCategory === "todos" ? "text-red-700 font-bold" : "text-gray-300 hover:text-red-700"}`}
+                      >
+                        Todos
+                      </button>
+                      <button
+                        onClick={() => setSelectedCategory("lanches")}
+                        className={`font-medium transition-colors ${selectedCategory === "lanches" ? "text-red-700 font-bold" : "text-gray-300 hover:text-red-700"}`}
+                      >
+                        Lanches
+                      </button>
+                      <button
+                        onClick={() => setSelectedCategory("bebidas")}
+                        className={`font-medium transition-colors ${selectedCategory === "bebidas" ? "text-red-700 font-bold" : "text-gray-300 hover:text-red-700"}`}
+                      >
+                        Bebidas
+                      </button>
+                      <button
+                        onClick={() => setSelectedCategory("sobremesas")}
+                        className={`font-medium transition-colors ${selectedCategory === "sobremesas" ? "text-red-700 font-bold" : "text-gray-300 hover:text-red-700"}`}
+                      >
+                        Sobremesas
+                      </button>
+                      <span className="text-gray-400">|</span>
+                      <button
+                        onClick={handleShowAboutUs}
+                        className="text-gray-300 hover:text-red-700 font-medium transition-colors"
+                      >
+                        Sobre
+                      </button>
+                    </div>
+                    {/* Carrinho alinhado na mesma linha */}
+                    <div className="flex items-center ml-auto">
+                      <Sheet>
+                        <SheetTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="relative bg-orange-500 hover:bg-orange-600 text-white border-0 rounded-full px-6 py-2"
+                          >
+                            <ShoppingCart className="h-5 w-5 mr-2" />
+                            Carrinho
+                            {getTotalItems() > 0 && (
+                              <Badge className="absolute -top-2 -right-2 bg-red-500 text-white animate-bounce">
+                                {getTotalItems()}
+                              </Badge>
+                            )}
+                          </Button>
+                        </SheetTrigger>
+                        <SheetContent>
+                          <SheetHeader>
+                            <SheetTitle>Seu Carrinho</SheetTitle>
+                            <SheetDescription>
+                              {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
+                            </SheetDescription>
+                          </SheetHeader>
+                          <div className="mt-6 space-y-4">
+                            {cart.map((item) => (
+                              <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
+                                <div className="flex-1">
+                                  <h4 className="font-medium">{item.name}</h4>
+                                  <p className="text-sm text-muted-foreground">
+                                    {item.category === "plano"
+                                      ? "Assinatura de plano"
+                                      : `R$ ${item.price.toFixed(2)} cada`}
+                                  </p>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  {item.category !== "plano" && (
+                                    <>
+                                      <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
+                                        <Minus className="h-4 w-4" />
+                                      </Button>
+                                      <span className="w-8 text-center">{item.quantity}</span>
+                                      <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
+                                        <Plus className="h-4 w-4" />
+                                      </Button>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                            {cart.length > 0 && (
+                              <>
+                                <Separator />
+                                <div className="flex justify-between items-center font-bold text-lg">
+                                  <span>Total:</span>
+                                  <span>R$ {getTotalPrice().toFixed(2)}</span>
+                                </div>
+                                <Button
+                                  className="w-full bg-orange-500 hover:bg-orange-600"
+                                  size="lg"
+                                  onClick={handleCheckout}
+                                >
+                                  Finalizar Pedido
+                                </Button>
+                              </>
+                            )}
+                          </div>
+                        </SheetContent>
+                      </Sheet>
+                    </div>
                   </nav>
-                  <div className="flex items-center space-x-4">
-                    <Sheet>
-                      <SheetTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="relative bg-purple-500 hover:bg-purple-600 text-white border-0 rounded-full px-6 py-2"
-                        >
-                          <ShoppingCart className="h-5 w-5 mr-2" />
-                          Carrinho
-                          {getTotalItems() > 0 && (
-                            <Badge className="absolute -top-2 -right-2 bg-purple-500 text-white animate-bounce">
-                              {getTotalItems()}
-                            </Badge>
-                          )}
-                        </Button>
-                      </SheetTrigger>
-                      <SheetContent>
-                        <SheetHeader>
-                          <SheetTitle>Seu Carrinho</SheetTitle>
-                          <SheetDescription>
-                            {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
-                          </SheetDescription>
-                        </SheetHeader>
-                        <div className="mt-6 space-y-4">
-                          {cart.map((item) => (
-                            <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
-                              <div className="flex-1">
-                                <h4 className="font-medium">{item.name}</h4>
-                                <p className="text-sm text-muted-foreground">
-                                  {item.category === "plano"
-                                    ? "Assinatura de plano"
-                                    : `R$ ${item.price.toFixed(2)} cada`}
-                                </p>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
-                                  <Minus className="h-4 w-4" />
-                                </Button>
-                                <span className="w-8 text-center">{item.quantity}</span>
-                                <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
-                                  <Plus className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            </div>
-                          ))}
-                          {cart.length > 0 && (
-                            <>
-                              <Separator />
-                              <div className="flex justify-between items-center font-bold text-lg">
-                                <span>Total:</span>
-                                <span>R$ {getTotalPrice().toFixed(2)}</span>
-                              </div>
-                              <Button
-                                className="w-full bg-purple-600 hover:bg-purple-700"
-                                size="lg"
-                                onClick={handleCheckout}
-                              >
-                                Finalizar Pedido
-                              </Button>
-                            </>
-                          )}
-                        </div>
-                      </SheetContent>
-                    </Sheet>
+                </div>
+              </div>
+            ) : (
+              // Metapharma Header igual ao fast food, mas com degradê roxo/azul
+              <div className="bg-white shadow-lg px-8 py-6 flex flex-col items-center relative w-full rounded-b-2xl">
+                {/* Fundo degradê roxo/azul sem imagem */}
+                <div
+      className="absolute inset-0 w-full h-full rounded-b-2xl"
+      style={{
+        background: "linear-gradient(90deg, rgba(140, 82, 168, 0.85) 0%, rgba(205, 205, 247, 0.85) 100%)",
+        zIndex: 1,
+        pointerEvents: "none",
+      }}
+    />
+                {/* Conteúdo do header */}
+                <div className="relative z-10 flex flex-col items-center w-full">
+                  {/* Logo e estrelas centralizados */}
+                  <div className="flex flex-col items-center mb-2" style={{ zIndex: 2, position: "relative" }}>
+                    <img
+                      src="/images/gus.jpg"
+                      alt="Gus Fring Service"
+                      className="w-14 h-14 rounded-full object-cover shadow-md border-2 border-purple-500 mb-2"
+                    />
+                    <div className="flex space-x-1">
+                      <Star className="h-4 w-4 text-purple-400 fill-current drop-shadow" />
+                      <Star className="h-4 w-4 text-blue-400 fill-current drop-shadow" />
+                      <Star className="h-4 w-4 text-yellow-400 fill-current drop-shadow" />
+                      <Star className="h-4 w-4 text-blue-400 fill-current drop-shadow" />
+                      <Star className="h-4 w-4 text-purple-400 fill-current drop-shadow" />
+                    </div>
                   </div>
+                  {/* Menu e carrinho alinhados horizontalmente */}
+                  <nav className="flex items-center justify-center gap-8 mt-2 w-full max-w-2xl mx-auto">
+                    <div className="flex items-center gap-8">
+                      <button
+                        onClick={() => setSelectedCategory("medicamentos")}
+                        className={`font-medium transition-colors ${selectedCategory === "medicamentos" ? "text-purple-700 font-bold" : "text-gray-300 hover:text-purple-400"}`}
+                      >
+                        Medicamentos
+                      </button>
+                      <span className="text-gray-100">|</span>
+                      <button
+                        onClick={handleShowAboutUs}
+                        className="text-gray-300 hover:text-purple-700 font-medium transition-colors"
+                      >
+                        Sobre
+                      </button>
+                    </div>
+                    {/* Carrinho alinhado na mesma linha */}
+                    <div className="flex items-center ml-auto">
+                      <Sheet>
+                        <SheetTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="relative bg-purple-500 hover:bg-purple-600 text-white border-0 rounded-full px-6 py-2"
+                          >
+                            <ShoppingCart className="h-5 w-5 mr-2" />
+                            Carrinho
+                            {getTotalItems() > 0 && (
+                              <Badge className="absolute -top-2 -right-2 bg-purple-500 text-white animate-bounce">
+                                {getTotalItems()}
+                              </Badge>
+                            )}
+                          </Button>
+                        </SheetTrigger>
+                        <SheetContent>
+                          <SheetHeader>
+                            <SheetTitle>Seu Carrinho</SheetTitle>
+                            <SheetDescription>
+                              {cart.length === 0 ? "Seu carrinho está vazio" : `${getTotalItems()} itens no carrinho`}
+                            </SheetDescription>
+                          </SheetHeader>
+                          <div className="mt-6 space-y-4">
+                            {cart.map((item) => (
+                              <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
+                                <div className="flex-1">
+                                  <h4 className="font-medium">{item.name}</h4>
+                                  <p className="text-sm text-muted-foreground">
+                                    {item.category === "plano"
+                                      ? "Assinatura de plano"
+                                      : `R$ ${item.price.toFixed(2)} cada`}
+                                  </p>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Button variant="outline" size="sm" onClick={() => removeFromCart(item.id)}>
+                                    <Minus className="h-4 w-4" />
+                                  </Button>
+                                  <span className="w-8 text-center">{item.quantity}</span>
+                                  <Button variant="outline" size="sm" onClick={() => addToCart(item)}>
+                                    <Plus className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </div>
+                            ))}
+                            {cart.length > 0 && (
+                              <>
+                                <Separator />
+                                <div className="flex justify-between items-center font-bold text-lg">
+                                  <span>Total:</span>
+                                  <span>R$ {getTotalPrice().toFixed(2)}</span>
+                                </div>
+                                <Button
+                                  className="w-full bg-purple-600 hover:bg-purple-700"
+                                  size="lg"
+                                  onClick={handleCheckout}
+                                >
+                                  Finalizar Pedido
+                                </Button>
+                              </>
+                            )}
+                          </div>
+                        </SheetContent>
+                      </Sheet>
+                    </div>
+                  </nav>
                 </div>
               </div>
             )}
@@ -1344,16 +1371,20 @@ export default function Component() {
         {/* Plans Section */}
         <section className="py-16">
           <div className="container mx-auto px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4 text-blue-700">
-                {isPharmacyMode ? "Planos de Saúde" : "Planos Gourmet"}
-              </h2>
-              <p className="text-xl text-gray-600">
-                {isPharmacyMode
-                  ? "Escolha o plano ideal e receba cupons exclusivos para seus medicamentos"
-                  : "Assine um plano e ganhe cupons especiais para suas refeições favoritas"}
-              </p>
-            </div>
+    <div className="text-center mb-12">
+      <h2
+        className={`text-4xl font-bold mb-4 ${
+          isPharmacyMode ? "text-blue-700" : "text-red-700"
+        }`}
+      >
+        {isPharmacyMode ? "Planos de biqueira" : "Planos Gourmet"}
+      </h2>
+      <p className="text-xl text-gray-600">
+        {isPharmacyMode
+          ? "Escolha o plano ideal e receba cupons exclusivos para seus medicamentos"
+          : "Assine um plano e ganhe cupons especiais para suas refeições favoritas"}
+      </p>
+    </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {plans.map((plan, index) => (
