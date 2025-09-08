@@ -703,7 +703,7 @@ export default function Component() {
                     </div>
                     <div className="relative">
                       <img
-                        src="/placeholder.svg?height=400&width=500&text=Metapharma+Historia"
+                        src="/images/gus.jpg?height=400&width=500&text=Metapharma+Historia"
                         alt="História da farmácia"
                         className="w-full h-auto rounded-2xl shadow-lg"
                       />
