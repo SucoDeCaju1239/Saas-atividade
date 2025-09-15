@@ -608,7 +608,7 @@ export default function Component() {
       { name: "Maykon Sullyvan", role: "Programador front-end e designer", image: "/images/gostoso.jpeg" },
       { name: "Matheus Ribeiro", role: "Programador front-end", image: "/images/matheus.jpeg" },
       { name: "Gabriel Anoé", role: "Programador back-end", image: "/images/gabriel.jpeg" },
-      { name: "Arthur Santos", role: "Programador back-end", image: "/images/arthur.jpeg" },
+      
       { name: "Joaquim Squarça", role: "Integrante", image: "/images/joaquim.jpeg" },
     ].map((member, index) => (
       <Card key={index} className="bg-white/90 backdrop-blur-sm">
